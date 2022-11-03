@@ -18,8 +18,8 @@ export class UsersHomeComponent implements OnInit {
       let userIdRoute = this.userRoute.snapshot.params['id']
       // let usersArray = JSON.parse(localStorage["allUsers"])
       let usersArray = this.userService.getUser()
-      this.userDetail = usersArray.find((userItem: any, index: any)=> index==userIdRoute)
-      console.log(this.userDetail);
+      // this.userDetail = usersArray.find((userItem: any, index: any)=> index==userIdRoute)
+      // console.log(this.userDetail);
   }
 
 }

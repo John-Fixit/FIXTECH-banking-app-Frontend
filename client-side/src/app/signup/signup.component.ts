@@ -1,47 +1,43 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsersService } from '../services/users.service';
-import { LogService } from '../services/log.service';
+import { FormBuilder, Validators } from '@angular/forms';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-  public firstName = "";
-  public lastName = "";
-  public email = "";
-  public password = "";
-  public userArray: any = []
-  public message:string = ""
 
   constructor(
     public navigateRoute : Router,
     public userService: UsersService,
-    public logService: LogService
+    public formBuilder : FormBuilder
   ) { }
 
   ngOnInit(): void {
-      this.userArray = this.userService.getUser()
-      console.log(this.logService.consoleLog());
-      
+
+  }
+  public contactRegex = /^[0][\d]{10}$/
+  public formGroup = this.formBuilder.group({
+    firstname: ["", [Validators.required, Validators.minLength(2)]],
+    lastname: ["", [Validators.required, Validators.minLength(2)]],
+    email: ["", [Validators.required, Validators.email]],
+    contact: ["", [Validators.required, Validators.pattern(this.contactRegex)]],
+    password: ["", [Validators.required, Validators.minLength(6)]],
+    co_password: ["", [Validators.required]],
+  })
+
+
+  handleRegister(){
+    event?.preventDefault()
+    
+    let userDetail = {firstname: this.formGroup.value['firstname'], lastname: this.formGroup.value['lastname'], email: this.formGroup.value['email'], contact: this.formGroup.value['contact'], password: this.formGroup.value['password']}
+    
+    
+    this.userService.registerUser(userDetail)
   }
 
-  signup(){
-    let userDetails = {firstName:this.firstName, lastName: this.lastName, email: this.email, password: this.password}
-    if(this.firstName == "" || this.lastName =="" || this.email =="" || this.password  == ""){
-      alert(`Please kindly filled up the required infomation`)
-    }else{
-      this.userArray.push(userDetails)
-      localStorage.setItem('allUsers', JSON.stringify(this.userArray))
-      this.firstName = "";
-      this.lastName = "";
-      this.email = "";
-      this.password= ""
-      this.message = "Great! User Registered successfully"
-      this.navigateRoute.navigate(['/'])
-    }
-  }
-    
+ 
   }
 

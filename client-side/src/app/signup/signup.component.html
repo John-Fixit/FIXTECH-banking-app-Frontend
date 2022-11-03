@@ -1,42 +1,80 @@
-<div>
-  <div class="col-9 mx-auto">
-      <div class="row ">
-          <div class="col-sm-6 bg-success">
-              <h3 class="text-white text-center mt-3">Welcome to my AngularJs Sign up page</h3>
-          </div>
-          <div class="col-sm-6">
-              <h3 class="shadow text-center py-2 text-success">Sign Up here!</h3>
-              <div class="form-floating">
-                  <input type="text" required="" class="form-control my-2" placeholder="First name" [(ngModel)]="firstName"
-                      value={{firstName}} />
-                  <label for="">First name</label>
-              </div>
-              <div class="form-floating">
-                  <input type="text" class="form-control my-2" placeholder="First name" [(ngModel)]="lastName"
-                      value={{lastName}} />
-                  <label for="">Last name</label>
-              </div>
-              <div class="form-floating">
-                  <input type="email" class="form-control my-2" placeholder="First name" [(ngModel)]="email"
-                      value={{email}} />
-                  <label for="">Email name</label>
-              </div>
-              <div class="form-floating">
-                  <input type="password" class="form-control my-2" placeholder="password" [(ngModel)]="password"
-                      value={{password}} />
-                  <label for="">Password</label>
-              </div>
-              <div class="button">
-      
-                  <button class="learn-more w-100" (click)="signup()">
-                    <span class="circle bg-success" aria-hidden="true">
-                    <span class="icon arrow"></span>
-                    </span>
-                    <span class="button-text">Sign up</span>
-                  </button>
-              </div>
-          </div>
-      </div>
-  </div>
 
+<div class="form col-md-4 mx-auto shadow p-3">
+    <h3 class="text-center card-header">Create Your Account</h3>
+    <form [formGroup]="formGroup" (submit)="handleRegister()">
+        <div class="row">
+            <div class="form-group col-md-6 my-3">
+                <label for="" class="fw-bold">First Name</label>
+                <div class="form-floating">
+                    <input type="text" class="form-control " name="firstname" placeholder="firstname" formControlName="firstname" [class.is-valid]="formGroup.get('firstname')?.valid && formGroup.get('firstname')?.touched " [class.is-invalid]="formGroup.get('firstname')?.invalid && formGroup.get('firstname')?.touched " >
+                    <label for="">First Name</label>
+                </div>
+                <div *ngIf="formGroup.get('firstname')?.errors && formGroup.get('firstname')?.touched">
+                    <small class="alert alert-danger" *ngIf="formGroup.get('firstname')?.errors?.['required']">First name must be provided(It is required)</small>
+                    <small class="alert alert-danger" *ngIf="formGroup.get('firstname')?.errors?.['minlength']">First name must not less than 3 character!</small>
+                </div>
+            </div>
+            <div class="form-group col-md-6 my-3">
+                <label for="" class="fw-bold">Last Name</label>
+                <div class="form-floating">
+                    <input type="text" class="form-control " name="lastname" placeholder="lastname" formControlName="lastname" [class.is-valid]="formGroup.get('lastname')?.valid && formGroup.get('lastname')?.touched " [class.is-invalid]="formGroup.get('lastname')?.invalid && formGroup.get('lastname')?.touched " >
+                    <label for="">Last Name</label>
+                </div>
+                <div *ngIf="formGroup.get('lastname')?.errors && formGroup.get('lastname')?.touched">
+                    <small class="alert alert-danger" *ngIf="formGroup.get('lastname')?.errors?.['required']">Last name must be provided(It is required)</small>
+                    <small class="alert alert-danger" *ngIf="formGroup.get('lastname')?.errors?.['minlength']">Last name must not less than 3 character!</small>
+                </div>
+            </div>
+        </div>
+
+            <div class="form-group my-3">
+                <label for="" class="fw-bold">E-mail Address</label>
+                <div class="form-floating">
+                    <input type="email" class="form-control " name="email" placeholder="email" formControlName="email" [class.is-valid]="formGroup.get('email')?.valid && formGroup.get('email')?.touched " [class.is-invalid]="formGroup.get('email')?.invalid && formGroup.get('email')?.touched " >
+                    <label for="">E-mail</label>
+                </div>
+                <div *ngIf="formGroup.get('email')?.errors && formGroup.get('email')?.touched">
+                    <small class="alert alert-danger" *ngIf="formGroup.get('email')?.errors?.['required']">E-mail address must be provided(It is required)</small>
+                    <small class="alert alert-danger" *ngIf="formGroup.get('email')?.errors?.['email']">Email must include @ sign</small>
+                </div>
+            </div>
+            <div class="form-group my-3">
+                <label for="" class="fw-bold">Contact</label>
+                <div class="form-floating">
+                    <input type="tel" class="form-control " name="contact" placeholder="contact" formControlName="contact" [class.is-valid]="formGroup.get('contact')?.valid && formGroup.get('contact')?.touched " [class.is-invalid]="formGroup.get('contact')?.invalid && formGroup.get('contact')?.touched " >
+                    <label for="">Contact</label>
+                </div>
+                <div *ngIf="formGroup.get('contact')?.errors && formGroup.get('contact')?.touched">
+                    <small class="alert alert-danger" *ngIf="formGroup.get('contact')?.errors?.['required']">Contact must be provided(It is required)</small>
+                    <small class="alert alert-danger" *ngIf="formGroup.get('contact')?.errors?.['pattern']">Contact must be 11 digit numbers starting with 0</small>
+                </div>
+            </div>
+        <div class="row">
+            <div class="form-group col-md-6 my-3">
+                <label for="" class="fw-bold">Password</label>
+                <div class="form-floating">
+                    <input type="password" class="form-control " name="password" placeholder="password" formControlName="password" [class.is-valid]="formGroup.get('password')?.valid && formGroup.get('password')?.touched " [class.is-invalid]="formGroup.get('password')?.invalid && formGroup.get('password')?.touched " >
+                    <label for="">Password</label>
+                </div>
+                <div *ngIf="formGroup.get('password')?.errors && formGroup.get('password')?.touched">
+                    <small class="alert alert-danger" *ngIf="formGroup.get('password')?.errors?.['required']">E-mail address must be provided(It is required)</small>
+                    <small class="alert alert-danger" *ngIf="formGroup.get('password')?.errors?.['minlength']">Password must at least upto 6 characters</small>
+                </div>
+            </div>
+            <div class="form-group col-md-6 my-3">
+                <label for="" class="fw-bold">Confirm Password</label>
+                <div class="form-floating">
+                    <input type="password" class="form-control " name="co-password" placeholder="password" formControlName="co_password" [class.is-valid]="formGroup.get('co_password')?.valid && formGroup.get('password')?.touched " [class.is-invalid]="formGroup.get('co_password')?.invalid && formGroup.get('co_password')?.touched " >
+                    <label for="">Confirm password</label>
+                </div>
+                <div *ngIf="formGroup.get('co_password')?.errors && formGroup.get('co_password')?.touched">
+                    <small class="alert alert-danger" *ngIf="formGroup.get('co_password')?.errors?.['required']">Password must be provided(It is required)</small>
+                    
+                </div>
+            </div>
+        </div>
+
+    
+        <button class="btn btn-primary mx-auto rounded-pill w-100" type="submit">Create Account</button>
+    </form>
 </div>

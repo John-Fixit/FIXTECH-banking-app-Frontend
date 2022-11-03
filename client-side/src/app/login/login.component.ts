@@ -20,16 +20,6 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.allUser = this.userService.getUser()
   }
-  login(){
-      let found = this.allUser.find((user:any, index: any)=> user.email == this.email)
-      this.userService.myName='john'
-      if(found){
-        localStorage.setItem('email', JSON.stringify(found.email))
-        this.route.navigate(['/'])
-      }
-      else{
-          this.message = 'User details is not correct'
-      }
-  }
+ 
 
 }
