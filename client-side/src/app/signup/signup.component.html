@@ -1,0 +1,42 @@
+<div>
+  <div class="col-9 mx-auto">
+      <div class="row ">
+          <div class="col-sm-6 bg-success">
+              <h3 class="text-white text-center mt-3">Welcome to my AngularJs Sign up page</h3>
+          </div>
+          <div class="col-sm-6">
+              <h3 class="shadow text-center py-2 text-success">Sign Up here!</h3>
+              <div class="form-floating">
+                  <input type="text" required="" class="form-control my-2" placeholder="First name" [(ngModel)]="firstName"
+                      value={{firstName}} />
+                  <label for="">First name</label>
+              </div>
+              <div class="form-floating">
+                  <input type="text" class="form-control my-2" placeholder="First name" [(ngModel)]="lastName"
+                      value={{lastName}} />
+                  <label for="">Last name</label>
+              </div>
+              <div class="form-floating">
+                  <input type="email" class="form-control my-2" placeholder="First name" [(ngModel)]="email"
+                      value={{email}} />
+                  <label for="">Email name</label>
+              </div>
+              <div class="form-floating">
+                  <input type="password" class="form-control my-2" placeholder="password" [(ngModel)]="password"
+                      value={{password}} />
+                  <label for="">Password</label>
+              </div>
+              <div class="button">
+      
+                  <button class="learn-more w-100" (click)="signup()">
+                    <span class="circle bg-success" aria-hidden="true">
+                    <span class="icon arrow"></span>
+                    </span>
+                    <span class="button-text">Sign up</span>
+                  </button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+</div>

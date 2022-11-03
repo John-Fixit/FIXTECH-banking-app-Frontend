@@ -1,0 +1,46 @@
+<form [formGroup]="userForm" class="col-5 mx-auto shadow p-3">
+    <h4 class="mx-auto text-center">React Forms</h4>
+    <div class="form-group">
+        <label for="">Name</label>
+        <div class="form-floating">
+            <input type="text" class="form-control" name="thisName" placeholder="name" formControlName="name" [class.is-valid]="userForm.get('name')?.valid && userForm.get('name')?.touched" [class.is-invalid]="userForm.get('name')?.invalid && userForm.get('name')?.touched">
+            <label for="">Name</label>
+        </div>
+        <div *ngIf="userForm.get('name')?.errors">
+            <small *ngIf="userForm.get('name')?.errors?.['required'] && userForm.get('name')?.touched" class="text-danger">Name is required</small>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="">Email</label>
+        <div class="form-floating">
+            <input type="email" name="thisEmail" class="form-control" placeholder="email"   formControlName="email" [class.is-valid]="userForm.get('email')?.valid && userForm.get('email')?. touched" [class.is-invalid]="userForm.get('email')?.invalid && userForm.get('email')?.touched">
+            <label for="">Email</label>
+        </div>
+        <div *ngIf="userForm.get('email')?.errors && userForm.get('email')?.touched">
+            <small class="text-danger" *ngIf="userForm.get('email')?.errors?.['required']">Email is required</small>
+            <small class="text-danger" *ngIf="userForm.get('email')?.errors?.['email']">The email should be valid</small>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="">Age</label>
+        <div class="form-floating">
+            <input type="number" name="age" formControlName="age" class="form-control" placeholder="age" [class.is-valid]="userForm.get('age')?.valid && userForm.get('age')?.touched" [class.is-invalid]="userForm.get('age')?.invalid && userForm.get('age')?.touched">
+            <label for="">age</label>
+        </div>
+        <div *ngIf="userForm.get('age')?.errors && userForm.get('age')?.touched">
+            <small class="text-danger" *ngIf="userForm.get('age')?.errors?.['required']">Age should be provided</small>
+            <small class="text-danger" *ngIf="userForm.get('age')?.errors?.['min']">Age should not be lesser than 10 age years</small>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="">password</label>
+        <div class="form-floating">
+            <input type="password" name="password" formControlName="password" class="form-control" placeholder="password" [class.is-valid]="userForm.get('password')?.valid && userForm.get('password')?.touched" [class.is-invalid]="userForm.get('password')?.invalid && userForm.get('password')?.touched">
+            <label for="">Password</label>
+        </div>
+        <div *ngIf="userForm.get('password')?.errors && userForm.get('password')?.touched">
+            <small class="text-danger" *ngIf="userForm.get('password')?.errors?.['required']">Password is required to proceed</small>
+            <small class="text-danger" *ngIf="userForm.get('password')?.errors?.['minlength']">Password must not lesser than 6 character</small>
+        </div>
+    </div>
+</form>

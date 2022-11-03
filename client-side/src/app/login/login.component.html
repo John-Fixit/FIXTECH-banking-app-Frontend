@@ -1,0 +1,22 @@
+<div class="col-sm-6 mx-auto">
+    <h3 class="shadow text-center py-2 text-success">Sign Up here!</h3>
+    <small class="text-center text-danger">{{message}}</small>
+    <div class="form-floating">
+        <input type="email" class="form-control my-2" placeholder="First name" [(ngModel)]="email"
+/>
+        <label for="">Email name</label>
+    </div>
+    <div class="form-floating">
+        <input type="password" class="form-control my-2" placeholder="password" [(ngModel)]="password" />
+        <label for="">Password</label>
+    </div>
+    <div class="button">
+
+        <button class="learn-more w-100" (click)="login()">
+          <span class="circle bg-success">
+          <span class="icon arrow"></span>
+          </span>
+          <span class="button-text btn" (click)="login()">Login</span>
+        </button>
+    </div>
+</div>
