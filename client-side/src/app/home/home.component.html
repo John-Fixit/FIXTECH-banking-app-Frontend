@@ -1,18 +1,1 @@
-<ng-container *ngIf="!userArray.length; then nothingIsHere; else thereIs"></ng-container>
- <ng-template #nothingIsHere><h1 class="text-center">No User Registered</h1></ng-template>
- <ng-template #thereIs>
-  <table class="table table-bordered table-striped table-responsive text-center">
-      <tr>
-          <th>S/N</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Email</th>
-      </tr>
-      <tr *ngFor="let user of userArray; let i = index" class="cursorPointer" routerLink="/users/{{i}}"> 
-          <td>{{i + 1}}</td>
-          <td>{{user.firstName}}</td>
-          <td>{{user.lastName}}</td>
-          <td>{{user.email}}</td>
-      </tr>
-  </table>
- </ng-template>
+<app-navbar></app-navbar>

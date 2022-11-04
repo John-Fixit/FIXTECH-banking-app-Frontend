@@ -1,22 +1,46 @@
-<div class="col-sm-6 mx-auto">
-    <h3 class="shadow text-center py-2 text-success">Sign Up here!</h3>
-    <small class="text-center text-danger">{{message}}</small>
-    <div class="form-floating">
-        <input type="email" class="form-control my-2" placeholder="First name" [(ngModel)]="email"
-/>
-        <label for="">Email name</label>
-    </div>
-    <div class="form-floating">
-        <input type="password" class="form-control my-2" placeholder="password" [(ngModel)]="password" />
-        <label for="">Password</label>
-    </div>
-    <div class="button">
-
-        <button class="learn-more w-100">
-          <span class="circle bg-success">
-          <span class="icon arrow"></span>
-          </span>
-          <span class="button-text btn">Login</span>
-        </button>
+<div class="form col-md-4 mx-auto shadow p-3 border border-primary rounded">
+    <div class="border border-primary shadow-sm rounded-1">
+        <h3 class="text-center card-header bg-primary rounded-3 text-light py-2">Create Your Account</h3>
+        <div class="text-center">
+            <small class="text-danger">{{message}}</small>
+        </div>
+            <form [formGroup]="formGroup" (submit)="handleLogin()">
+            <div class="form-group my-3">
+                <label for="" class="fw-bold">Account Number</label>
+                <div class="form-floating">
+                    <input type="text" class="form-control " name="accountNumber" placeholder="accountNumber"
+                        formControlName="accountNumber"
+                        [class.is-valid]="formGroup.get('accountNumber')?.valid && formGroup.get('accountNumber')?.touched "
+                        [class.is-invalid]="formGroup.get('accountNumber')?.invalid && formGroup.get('accountNumber')?.touched ">
+                    <label for="" class="text-dark">Account Number</label>
+                </div>
+                <div *ngIf="formGroup.get('accountNumber')?.errors && formGroup.get('accountNumber')?.touched">
+                    <small class="text-danger" *ngIf="formGroup.get('accountNumber')?.errors?.['required']">Account
+                        Number must be provided(It is required)</small>
+                    <small class="text-danger" *ngIf="formGroup.get('accountNumber')?.errors?.['minlength']">Account
+                        Number must be 10 digit</small>
+                    <small class="text-danger" *ngIf="formGroup.get('accountNumber')?.errors?.['maxlength']">Account
+                        Number must not greater than 10 digit</small>
+                </div>
+            </div>
+            <div class="form-group my-3">
+                <label for="" class="fw-bold">Password</label>
+                <div class="form-floating">
+                    <input type="password" class="form-control " name="password" placeholder="password"
+                        formControlName="password"
+                        [class.is-valid]="formGroup.get('password')?.valid && formGroup.get('password')?.touched "
+                        [class.is-invalid]="formGroup.get('password')?.invalid && formGroup.get('password')?.touched ">
+                    <label for="" class="text-dark">Password</label>
+                </div>
+                <div *ngIf="formGroup.get('password')?.errors && formGroup.get('password')?.touched">
+                    <small class="text-danger" *ngIf="formGroup.get('password')?.errors?.['required']">Password must be
+                        provided(It is required)</small>
+                </div>
+            </div>
+            <div class="col-12 px-2">
+                <p>Don't have an account? <a routerLink="/register" class="text-decoration-none text-primary">Sign up.</a></p>
+            </div>
+            <button class="btn btn-primary mx-auto rounded-pill w-100" type="submit">Login to your account</button>
+        </form>
     </div>
 </div>

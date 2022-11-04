@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
       this.userArray = JSON.parse(localStorage["allUsers"])
-      console.log(this.userService.myName);
+      // console.log(this.userService.myName);
       
   }
 
