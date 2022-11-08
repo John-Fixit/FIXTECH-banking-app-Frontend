@@ -12,13 +12,14 @@ const userSchema = new mongoose.Schema({
 })
 
 let saltRound = 10
-
+let accountNumber = Math.floor("2"+(100000000 + Math.random() * 900000000))
 userSchema.pre("save", function(next){
     bcrypt.hash(this.password, saltRound, (err, hashedPassowrd)=>{
         if(err){
             console.log(err);
         }else{
              this.password = hashedPassowrd
+             this.accountNumber = accountNumber
              next()
         }
     } )

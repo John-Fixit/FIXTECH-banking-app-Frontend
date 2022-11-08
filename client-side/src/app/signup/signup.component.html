@@ -4,6 +4,7 @@
         
         <h3 class="text-center card-header bg-primary rounded-3 text-light py-2">Create Your Account</h3>
         <small class="alert alert-danger py-0" *ngIf="message != ''">{{message}}</small>
+        <small class="alert py-1 {{resStatus? 'alert-success' : 'alert-danger'}} " *ngIf="">{{resMessage}}</small>
         <form [formGroup]="formGroup" (submit)="handleRegister()">
         <div class="row">
             <div class="form-group col-md-6 my-3">
@@ -82,7 +83,13 @@
         <div class="col-12 px-2">
             <p>Already have an account? <a routerLink="/login" class="text-decoration-none text-primary">Log in.</a></p>
         </div>
-        <button class="btn btn-primary mx-auto rounded-pill w-100" type="submit" [disabled]="">Create Account</button>
+        <button class="btn btn-primary mx-auto rounded-pill w-100" type="submit" [disabled]="">
+            {{
+                isLoading? "..."
+                : "Create Account"
+            }}
+            
+        </button>
     </form>
     </div>
 </div>

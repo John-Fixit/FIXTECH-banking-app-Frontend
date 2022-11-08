@@ -1,16 +1,20 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 interface SideNavToggle{
   screenWidth: number;
   collapsed: boolean;
 }
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-body',
+  templateUrl: './body.component.html',
+  styleUrls: ['./body.component.css']
 })
-export class AppComponent {
-  title = 'FINTECH';
+export class BodyComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
   @Input() collapsed = false
   @Input() screenWidth = 0;
   getBodyClass(): string{
@@ -23,11 +27,11 @@ export class AppComponent {
     }
     return styleClass;
   }
+
   isCollapsed = false;
-  // screenWidth = 0;
+
   onToggleSideNav(data: SideNavToggle):void{
     this.screenWidth = data.screenWidth
     this.isCollapsed = data.collapsed
   }
-
 }

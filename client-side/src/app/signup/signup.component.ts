@@ -12,18 +12,18 @@ import { environment } from 'src/environments/environment';
 export class SignupComponent implements OnInit {
   public message = ""
   public url = environment.url
+  public isLoading = false
+  public resStatus:any = undefined
+  public resMessage:any = ""
+
   constructor(
     public navigateRoute : Router,
     public userService: UsersService,
     public formBuilder : FormBuilder,
-    private http : HttpClient,
   ) { }
 
   ngOnInit(): void {
-      this.http.get<any>(this.url).subscribe(res=>{
-        console.log(res);
-        
-      })
+      
   }
   public contactRegex = /^[0][\d]{10}$/
   public formGroup = this.formBuilder.group({
@@ -42,10 +42,19 @@ export class SignupComponent implements OnInit {
     let userDetail = {firstname: this.formGroup.value['firstname'], lastname: this.formGroup.value['lastname'], email: this.formGroup.value['email'], contact: this.formGroup.value['contact'], password: this.formGroup.value['password']}
     if(this.formGroup.value['firstname'] != "" || this.formGroup.value['lastname'] !="" || this.formGroup.value['email'] != "" || this.formGroup.value['contact'] !="" || this.formGroup.value['password']!=""){
 
-      this.userService.registerUser(userDetail).subscribe(response=> {
-        console.log(response);
-
-      })
+      if(this.formGroup.value['password'] === this.formGroup.value['co_password']){
+        this.isLoading = true
+        this.userService.registerUser(userDetail).subscribe(response=> {
+          this.resStatus = response.status
+          this.message = response.message
+          this.isLoading = false
+        }, error=> {
+          console.log(error);
+        })
+      }
+      else{
+        this.message = "Password and confirm password entered doesn't match each other. Please check and re-type it."
+      }
     }
     else{
       this.message = "All input must be filled before proceeding"

@@ -31,20 +31,23 @@ export class LoginComponent implements OnInit {
 
   handleLogin(){
       event?.preventDefault();
-      let accountNumber = this.formGroup.value['accountNumber']
+      let accountNumber = this.formGroup.value['accountNumber'] 
       let password = this.formGroup.value['password']
       if(accountNumber == "" || password == ""){
         this.message = "All input must be filled before proceeding!!!"
       }
       else{
-      this.http.post(`${this.loginUrl}/authLogin`, {accountNumber, password}).subscribe(res=>{
-        console.log(res);
-        // if(res.status){
-        //   localStorage.setItem('userToken', JSON.stringify(res.token))
-        // }
-        // else{
-        //     this.message = res.message
-        // }
+      this.http.post<any>(`${this.loginUrl}/authLogin`, {accountNumber, password}).subscribe(res=>{
+        if(res.status){
+          localStorage.setItem('userToken', JSON.stringify(res.token))
+              this.route.navigate(['/home/dashboard'])
+        }
+        else{
+            this.message = res.message
+        }
+      }, error=>{
+        console.log(error);
+        
       })
     }
   }
