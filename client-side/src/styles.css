@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
-*{
+/* *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -13,4 +13,44 @@ body{
 }
 .space-start{
     margin-left: 15vh;
+} */
+
+
+app-header{
+    position: fixed;
+    width: 100%;
+    top: 0px;
+    height: 4rem;
+    z-index: 2;
+}
+main{
+    position: absolute;
+    width: 100%;
+    top: 4rem;
+    z-index: 1;
+}
+app-sidenav{
+    position: absolute;
+    width: 67px;
+    background: rgb(3, 3, 49);
+    height: 90vh;
+    border-top: 1px solid white;
+    overflow: hidden;
+    white-space: nowrap;
+    transform: width 250ms linear;
+}
+.display-area{
+    position: absolute;
+    left: 70px;
+    width: calc(100%-70px);
+    transition: left 250ms linear, width 250ms linear;
+}
+.display-area-shrink{
+    left: 230px;
+    width: calc(100%-230px);
+    transition: all 0.5s ease;
+}
+.app-side-nav-open{
+    width: 230px;
+    transition: all 0.5s ease;
 }

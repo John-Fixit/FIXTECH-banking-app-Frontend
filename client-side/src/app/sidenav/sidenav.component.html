@@ -1,17 +1,9 @@
-<div class="sidenav" [ngClass]="collapsed? 'sidenav-collapsed' : ''">
-    <div class="logo-container">
-        <button class="logo" (click)="toggleCollapse()">FT</button>
-        <div class="logo-text" @fadeInOut *ngIf="collapsed">FIXTECH</div>
-        <button class="btn btn-close bg-light" @rotate *ngIf="collapsed" (click)="closeSidenav()">
-            <i class="fal fa-times"></i>
-        </button>
-    </div>
-    <ul class="sidenav-nav">
-        <li class="sidenav-nav-item " *ngFor="let data of navData">
-            <a href="" class="sidenav-nav-link" [routerLink]="[data.routerLink]" routerLinkActive="router-link-active"
-                [routerLinkActiveOptions]="{exact: true}">
-                <i class="sidenav-link-icon" [class]="data.icon">IC</i>
-                <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">{{data.label}}</span>
+<div class="side-nav-content">
+    <ul class="sidenav-nav" [ngClass]="{'nav-list-open': sideNavStatus}">
+        <li class="nav-list-item list-unstyled sidenav-nav-item" *ngFor="let routeItem of navData">
+            <a href="" class="text-decoration-none sidenav-nav-link" routerLink="{{routeItem.route}}" routerLinkActive="router-link-active">
+                <i class="nav-icon {{routeItem.icon}}">{{routeItem.myIcon}}</i>
+                <span class="mx-3">{{routeItem.name}}</span>
             </a>
         </li>
     </ul>

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UsersService } from '../services/users.service'
+import { Router } from '@angular/router'
 interface SideNavToggle{
   screenWidth: number;
   collapsed: boolean;
@@ -13,24 +14,22 @@ interface SideNavToggle{
 export class DashboardComponent implements OnInit {
 
   constructor(
-    public userService : UsersService
+    public userService : UsersService,
+    public router : Router
   ) { 
     
   }
 
   ngOnInit(): void {
-    // console.log(this.userService.getUser());
-    
     this.userService.getUser().subscribe(res=>{
-      console.log(res);
+        if(res.status){
+          localStorage.setItem('userDetail', JSON.stringify(res.userDetail))
+        }
+        else{
+          localStorage.removeItem('userToken')
+          this.router.navigate(['/login'])
+        }
     })
   }
-  @Input() collapsed = false
-  @Input() screenWidth = 0;
-
-  isCollapsed = false;
-  onToggleSideNav(data: SideNavToggle):void{
-    this.screenWidth = data.screenWidth
-    this.isCollapsed = data.collapsed
-  }
+  sideNavStatus : boolean = false
 }

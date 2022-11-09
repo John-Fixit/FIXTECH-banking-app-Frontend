@@ -62,6 +62,14 @@ const signup = (req, res) => {
                             <p>click on this <a href='https://google.com'>link</a> to sign in to your account
                             Thank you!`
             }
+            transporter.sendMail(mailMessage, (err, result)=>{
+              if(err){
+                console.log(err);
+              }
+              else{
+                console.log(result);
+              }
+            })
             res.json({ message: `User registered successfully, navigate to your gmail account for your account number!`, status: true });
           }
         });
@@ -85,7 +93,7 @@ const signin = (req, res) => {
                         res.json({message: `Internal server error, please check your connection and try again.`, status: false})
                     }else{
                         if(same){
-                            const token = jwt.sign({accountNumber: req.body.accountNumber}, SECRET, {expiresIn: "1h"})
+                            const token = jwt.sign({accountNumber: req.body.accountNumber}, SECRET)
                             res.json({token, status: true})
                         }else{
                             res.json({message: `Incorrect password, please check your password and try again`})

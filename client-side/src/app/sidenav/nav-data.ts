@@ -1,28 +1,38 @@
-export const navbarData= [
+export const navData = [
     {
-        routerLink: "dashboard",
-        icon: "DASH",
-        label: "Dashboard"
+        route: "/home/1",
+        name: "Dashborad1",
+        myIcon: "ICN",
+        icon: "fa fa-home"
     },
     {
-        routerLink: "/home/transfer",
-        icon: "DASH",
-        label: "Transfer"
+        route: "/home/2",
+        name: "Dashborad2",
+        myIcon: "ICN",
+        icon: "fa fa-money"
     },
     {
-        routerLink: "/home/withdraw",
-        icon: "DASH",
-        label: "Withdraw"
+        route: "/home/3",
+        name: "Dashborad3",
+        myIcon: "ICN",
+        icon: "fa fa-money"
     },
     {
-        routerLink: "/home/airtime",
-        icon: "DASH",
-        label: "Airtime"
+        route: "/home/4",
+        name: "Dashborad4",
+        myIcon: "ICN",
+        icon: "fa fa-money"
     },
     {
-        routerLink: "/home/setting",
-        icon: "DASH",
-        label: "Setting"
+        route: "/home/5",
+        name: "Dashborad5",
+        myIcon: "ICN",
+        icon: "fa fa-money"
     },
-    
-];
+    {
+        route: "/home/6",
+        name: "Dashborad6",
+        myIcon: "ICN",
+        icon: "fa fa-money"
+    },
+]

@@ -1,6 +1,15 @@
-<app-sidenav (onToggleSideNav)="onToggleSideNav($event)">
-    
-</app-sidenav>
+<app-header (sideNavToggled)="sideNavStatus = $event"></app-header>
+<main>
+    <app-sidenav class=" shadow" [sideNavStatus]="sideNavStatus" [ngClass]="{'app-side-nav-open': sideNavStatus}"></app-sidenav>
+    <div class="display-area p-3" [ngClass]="{'display-area-shrink': sideNavStatus}">
+        <p class="fs-3 fw-bold fst-italic">main display area</p>
+        <div class="space-start">
+
+            <h1>Welcome to dashboard page</h1>
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet cum dolor eos sint, vero assumenda consequuntur ipsam eius, ea magni laboriosam velit iste dignissimos sed aperiam ullam ut repellendus aut.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet cum dolor eos sint, vero assumenda consequuntur ipsam eius, ea magni laboriosam velit iste dignissimos sed aperiam ullam ut repellendus aut.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet cum dolor eos sint, vero assumenda consequuntur ipsam eius, ea magni laboriosam velit iste dignissimos sed aperiam ullam ut repellendus aut.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet cum dolor eos sint, vero assumenda consequuntur ipsam eius, ea magni laboriosam velit iste dignissimos sed aperiam ullam ut repellendus aut.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet cum dolor eos sint, vero assumenda consequuntur ipsam eius, ea magni laboriosam velit iste dignissimos sed aperiam ullam ut repellendus aut.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet cum dolor eos sint, vero assumenda consequuntur ipsam eius, ea magni laboriosam velit iste dignissimos sed aperiam ullam ut repellendus aut.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet cum dolor eos sint, vero assumenda consequuntur ipsam eius, ea magni laboriosam velit iste dignissimos sed aperiam ullam ut repellendus aut.</p>
+        </div>
+    </div>
+</main>
 <div class="space-start">
 
     <h1>Welcome to dashboard page</h1>

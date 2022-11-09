@@ -15,6 +15,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { TransferComponent } from './transfer/transfer.component';
 import { SettingsComponent } from './settings/settings.component';
+import { HeaderComponent } from './header/header.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +29,7 @@ import { SettingsComponent } from './settings/settings.component';
     DashboardComponent,
     TransferComponent,
     SettingsComponent,
+    HeaderComponent,
 
   ],
   imports: [
@@ -36,7 +38,7 @@ import { SettingsComponent } from './settings/settings.component';
     AppRoutingModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
