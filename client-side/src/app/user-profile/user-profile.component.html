@@ -1,19 +1,9 @@
-<div class="container">
-    <div class="col-lg-5 col-md-6 mx-auto border py-3 shadow-sm">
-        <ng-container *ngIf="isLoading; then itsLoading; else notLoading; " ></ng-container>
-        <ng-template #itsLoading>
-            <div class="spinner"></div>
-        </ng-template>
-        <ng-template #notLoading>
-        <div class="text-center">
-            <img [src]="thisUser.avatar_url" class="rounded-circle" alt="loading">
-            <div class="card-body text-center">
-                <h3 class="text-primary">{{thisUser.login}}</h3>
-                <h4 class="text-info">{{thisUser.type}}</h4>
-
-                <a [href]="thisUser.html_url" class="btn btn-success m-2">Github Profile</a>
-            </div>
+<app-header (sideNavToggled)="sideNavStatus = $event"></app-header>
+<main>
+    <app-sidenav class=" shadow" [sideNavStatus]="sideNavStatus" [ngClass]="{'app-side-nav-open': sideNavStatus}"></app-sidenav>
+    <div class="display-area p-3" [ngClass]="{'display-area-shrink': sideNavStatus}">
+        <div class="container">
+            <h1>Welcome to profile page {{userId}}</h1>
         </div>
-    </ng-template>
     </div>
-</div>
+</main>

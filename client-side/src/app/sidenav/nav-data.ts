@@ -1,6 +1,6 @@
 export const navData = [
     {
-        route: "/home/1",
+        route: "/home/dashboard",
         name: "Dashborad1",
         myIcon: "ICN",
         icon: "fa fa-home"

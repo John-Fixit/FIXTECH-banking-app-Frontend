@@ -7,8 +7,12 @@ const userSchema = new mongoose.Schema({
     email: String,
     accountNumber: Number,
     totalBalance: Number,
+    profile_picture: String,
     password: String,
-    profile_picture: String
+    transactionType: [
+        credit= [],
+        debit = []
+    ],
 })
 
 let saltRound = 10

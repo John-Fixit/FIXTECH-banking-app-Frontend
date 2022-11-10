@@ -13,12 +13,14 @@ export class UsersService {
     private http : HttpClient,
     public router : Router
   ) { }
+
+  //authorization code
   getUser(){
     if(localStorage['userToken']){
       this.userToken =  JSON.parse(localStorage['userToken'])
     }
     else{
-        this.router.navigate(['/login'])
+        // this.router.navigate(['/login'])
     }
     const headers = new HttpHeaders({
       "Authorization": `Bearer ${this.userToken}`,
@@ -28,6 +30,8 @@ export class UsersService {
     const requestOptions = { headers: headers };
     return this.http.get<any>(`${this.url}/authorizeUser`, requestOptions)
   }
+
+  //sign up
   registerUser(userDetail:any){
       return this.http.post<any>(`${this.url}/auth`, userDetail)
   }

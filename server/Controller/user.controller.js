@@ -171,6 +171,10 @@ const uploadUserPicture=(req, res)=>{
   })
  
 }
+const getUserDetail =(req, res)=>{
+  console.log(req.params);
+    // userModel.findById({id: })
+}
 
 module.exports = {
   getRes,
@@ -178,5 +182,6 @@ module.exports = {
   signin,
   // googleCallback,
   authorizeFunc,
-  uploadUserPicture
+  uploadUserPicture,
+  getUserDetail
 };

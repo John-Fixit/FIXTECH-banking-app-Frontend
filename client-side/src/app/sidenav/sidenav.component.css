@@ -1,5 +1,9 @@
 .side-nav-content{
     width: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 85vh;
 }
 .sidenav-nav{
     list-style: none;
@@ -34,4 +38,6 @@
 }
 .router-link-active{
     background-color: rgb(201, 192, 192);
+    color: rgb(3, 3, 49);
+    font-weight: bold;
 }

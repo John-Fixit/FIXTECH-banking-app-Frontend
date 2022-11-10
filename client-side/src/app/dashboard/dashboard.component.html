@@ -1,17 +1,62 @@
 <app-header (sideNavToggled)="sideNavStatus = $event"></app-header>
 <main>
-    <app-sidenav class=" shadow" [sideNavStatus]="sideNavStatus" [ngClass]="{'app-side-nav-open': sideNavStatus}"></app-sidenav>
+    <app-sidenav class=" shadow" [sideNavStatus]="sideNavStatus" [ngClass]="{'app-side-nav-open': sideNavStatus}">
+    </app-sidenav>
     <div class="display-area p-3" [ngClass]="{'display-area-shrink': sideNavStatus}">
-        <p class="fs-3 fw-bold fst-italic">main display area</p>
-        <div class="space-start">
+        <div class="">
+            <div class="shadow-sm py-2">
+                <h4 class="bn_firstColor ps-2">Dashboard</h4>
+                <h5 class="ps-4"></h5>
+            </div>
+            <div class="row mx-auto my-3">
+                <div class="col-lg-4 my-2">
+                    <div class="h-100 py-2 shadow border-0">
+                        <div class="text-center">
+                            <p class="fw-bold bn_secondColor">Account Balance
+                                <span class="float-end mx-2 cursorPointer" (click)="switchEye()">{{eyeSwitch? 'eye off'
+                                    : "eye on"}}
+                                </span>
+                            </p>
+                            <h4 *ngIf="eyeSwitch">{{notEmpty? (userDetail.totalBalance| currency:'USD')
+                                : 000| currency:'USD'}}</h4>
 
-            <h1>Welcome to dashboard page</h1>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet cum dolor eos sint, vero assumenda consequuntur ipsam eius, ea magni laboriosam velit iste dignissimos sed aperiam ullam ut repellendus aut.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet cum dolor eos sint, vero assumenda consequuntur ipsam eius, ea magni laboriosam velit iste dignissimos sed aperiam ullam ut repellendus aut.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet cum dolor eos sint, vero assumenda consequuntur ipsam eius, ea magni laboriosam velit iste dignissimos sed aperiam ullam ut repellendus aut.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet cum dolor eos sint, vero assumenda consequuntur ipsam eius, ea magni laboriosam velit iste dignissimos sed aperiam ullam ut repellendus aut.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet cum dolor eos sint, vero assumenda consequuntur ipsam eius, ea magni laboriosam velit iste dignissimos sed aperiam ullam ut repellendus aut.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet cum dolor eos sint, vero assumenda consequuntur ipsam eius, ea magni laboriosam velit iste dignissimos sed aperiam ullam ut repellendus aut.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet cum dolor eos sint, vero assumenda consequuntur ipsam eius, ea magni laboriosam velit iste dignissimos sed aperiam ullam ut repellendus aut.</p>
+                            <h4 *ngIf="!eyeSwitch">xxxxx</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 my-2">
+                    <div class="h-100 py-2 shadow border-0">
+                        <div class="text-center">
+                            <p class="fw-bold bn_secondColor">Last Transaction</p>
+                            <div class="row">
+                                <div class="col-6 border-end">
+                                    <p class="fw-bold bn_secondColor">Credit</p>
+                                    
+                                    <h4> {{ userDetail !== undefined ? (userDetail.transactionType.length? (userDetail.transactionType.length[0].length-1 | currency:'USD') : 000| currency: 'USD') : 000| currency: 'USD'}}</h4>
+                                </div>
+                                <div class="col-6 border-start">
+                                    <p class="fw-bold bn_secondColor">Debit</p>
+                                    <h4> {{ userDetail !== undefined ? (userDetail.transactionType.length? (userDetail.transactionType.length[1].length-1 | currency:'USD') : 000| currency: 'USD') : 000| currency: 'USD'}}</h4>
+                                
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 my-2">
+                    <div class="h-100 py-2 shadow border-0">
+                        <div class="text-center">
+                            <p class="fw-bold bn_secondColor">
+                                Account Number
+                            </p>
+                            <h4 class="fw-bold">
+                                {{ userDetail !== undefined ? userDetail.accountNumber : "xxxxxxxxxx"}}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </main>
-<div class="space-start">
-
-    <h1>Welcome to dashboard page</h1>
-    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet cum dolor eos sint, vero assumenda consequuntur ipsam eius, ea magni laboriosam velit iste dignissimos sed aperiam ullam ut repellendus aut.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet cum dolor eos sint, vero assumenda consequuntur ipsam eius, ea magni laboriosam velit iste dignissimos sed aperiam ullam ut repellendus aut.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet cum dolor eos sint, vero assumenda consequuntur ipsam eius, ea magni laboriosam velit iste dignissimos sed aperiam ullam ut repellendus aut.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet cum dolor eos sint, vero assumenda consequuntur ipsam eius, ea magni laboriosam velit iste dignissimos sed aperiam ullam ut repellendus aut.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet cum dolor eos sint, vero assumenda consequuntur ipsam eius, ea magni laboriosam velit iste dignissimos sed aperiam ullam ut repellendus aut.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet cum dolor eos sint, vero assumenda consequuntur ipsam eius, ea magni laboriosam velit iste dignissimos sed aperiam ullam ut repellendus aut.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet cum dolor eos sint, vero assumenda consequuntur ipsam eius, ea magni laboriosam velit iste dignissimos sed aperiam ullam ut repellendus aut.</p>
-</div>

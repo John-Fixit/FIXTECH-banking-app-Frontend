@@ -8,7 +8,6 @@ import { SignupComponent } from './signup/signup.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
-import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { BodyComponent } from './body/body.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
@@ -16,12 +15,12 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { TransferComponent } from './transfer/transfer.component';
 import { SettingsComponent } from './settings/settings.component';
 import { HeaderComponent } from './header/header.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 @NgModule({
   declarations: [
     AppComponent,
     SignupComponent,
     LoginComponent,
-    NavbarComponent,
     HomeComponent,
     ErrorPageComponent,
     BodyComponent,
@@ -30,7 +29,7 @@ import { HeaderComponent } from './header/header.component';
     TransferComponent,
     SettingsComponent,
     HeaderComponent,
-
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,

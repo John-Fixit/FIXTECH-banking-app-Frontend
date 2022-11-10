@@ -10,12 +10,8 @@ export class ApiService {
   constructor(
     private http : HttpClient
   ) { }
-
-    getApiUsers(){
-      return this.http.get<any>(this.url)
-    }
-    
-    getUser(user: any){
-        return this.http.get<any>(`${this.url}/${user}`)
+ 
+    getUser(userId: any){
+        return this.http.get<any>(`${this.url}/getUserDetail/${userId}`)
     }
 }
