@@ -1,11 +1,11 @@
 <nav class="navbar navbar-expand nav-header-color px-2">
-    <div class="side-nav-button p-2 text-light" (click)="sideNavToggle()">MENU <i class="fa-solid fa-bars"></i></div>
+    <div class="side-nav-button p-2 text-light" (click)="sideNavToggle()">{{!menuStatus? "OPEN" : "CLOSE"}}<fa-icon [class]="barIcon"></fa-icon></div>
     <h1><a href="" routerLink="/home/dashboard" class="navbar-brand px-4 fs-3 text-light fw-bold">FIXCOM</a></h1>
     <div class="navbar-collapse">
         <ul class="navbar-nav ms-auto">
-            <li class="nav-item dropdown border">
+            <li class="nav-item dropdown">
                 <a href="#" class="nav-link" role="button" data-bs-toggle="dropdown">
-                <img src="" style="height: 50px; width: 50px;" class="rounded-circle" alt="profile photo">
+                <img src="assets/user.jpg" style="height: 50px; width: 50px;" class="rounded-circle" alt="profile photo">
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark">
                     <li><a href="" routerLink='/home/profile/{{userId}}' class="dropdown-item">Profile</a></li>

@@ -16,7 +16,7 @@ const routes: Routes = [
     {path: 'profile/:id', component: UserProfileComponent, title: 'Profile'},
     {path: 'setting', component: SettingsComponent, title: 'Setting'},
   ]},
-
+ 
   {path: "**", component: ErrorPageComponent, title: "Page Not Found"}
 ];
 

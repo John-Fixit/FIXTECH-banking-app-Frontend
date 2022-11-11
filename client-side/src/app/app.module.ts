@@ -16,6 +16,9 @@ import { TransferComponent } from './transfer/transfer.component';
 import { SettingsComponent } from './settings/settings.component';
 import { HeaderComponent } from './header/header.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { FooterComponent } from './pages/footer/footer.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { StatisticsComponent } from './pages/statistics/statistics.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +32,9 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     TransferComponent,
     SettingsComponent,
     HeaderComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    FooterComponent,
+    StatisticsComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +43,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    FontAwesomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

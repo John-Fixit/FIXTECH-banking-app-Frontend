@@ -38,14 +38,28 @@ export class SignupComponent implements OnInit {
 
   handleRegister(){
     event?.preventDefault()
+    let accountNumber = '2'+(Math.floor(100000000 + Math.random() * 900000000))
+    
+    let userDetail = {
+      firstname: this.formGroup.value['firstname'], 
+      lastname: this.formGroup.value['lastname'], 
+      email: this.formGroup.value['email'], 
+      contact: this.formGroup.value['contact'], 
+      password: this.formGroup.value['password'], 
+      accountNumber: accountNumber, 
+      transactionType: [],
+      profile_picture: ""
+    }
 
-    let userDetail = {firstname: this.formGroup.value['firstname'], lastname: this.formGroup.value['lastname'], email: this.formGroup.value['email'], contact: this.formGroup.value['contact'], password: this.formGroup.value['password']}
+
     if(this.formGroup.value['firstname'] != "" || this.formGroup.value['lastname'] !="" || this.formGroup.value['email'] != "" || this.formGroup.value['contact'] !="" || this.formGroup.value['password']!=""){
 
       if(this.formGroup.value['password'] === this.formGroup.value['co_password']){
         this.isLoading = true
         this.userService.registerUser(userDetail).subscribe(response=> {
           this.resStatus = response.status
+          console.log(this.resStatus);
+          
           this.message = response.message
           this.isLoading = false
         }, error=> {

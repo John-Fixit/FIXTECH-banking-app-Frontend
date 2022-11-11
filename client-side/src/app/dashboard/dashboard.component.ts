@@ -10,7 +10,6 @@ import { Router } from '@angular/router'
 export class DashboardComponent implements OnInit {
 public eyeSwitch:boolean = false
 public userDetail:any = undefined;
-public notEmpty:boolean = false
   constructor(
     public userService : UsersService,
     public router : Router
@@ -21,12 +20,6 @@ public notEmpty:boolean = false
 
   ngOnInit(): void {
     // this.userDetail = JSON.parse(localStorage['userDetail'])
-    if(this.userDetail){
-      this.notEmpty = true
-    }
-    else{
-      this.notEmpty = false
-    }
     this.userService.getUser().subscribe(res=>{
         if(res.status){
           localStorage.setItem('userDetail', JSON.stringify(res.userDetail))

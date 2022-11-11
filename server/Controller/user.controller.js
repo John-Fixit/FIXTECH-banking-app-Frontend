@@ -57,20 +57,19 @@ const signup = (req, res) => {
               subject: 'Registration successfull',
               html: `<b class='card-title'>Dear ${req.body.firstname} ${req.body.lastname},</b>
                             <p >Welcome to FIXTECH app!</p>
-                            <p >Congratulations! youraccount has been successfully created.</p>
-                            <p >Your account number is ${accountNumber}. FIXTECH app it's a simple, fast and secure banking app.</p>
-                            <p>click on this <a href='https://google.com'>link</a> to sign in to your account
+                            <p >Congratulations! your account has been successfully created.</p>
+                            <p >Your account number is ${req.body.accountNumber}. FIXTECH, it's a simple, fast and secure bank app.</p>
+                            <p>click on this <a href='https://google.com'>LINK</a> to sign in to your account.
                             Thank you!`
             }
             transporter.sendMail(mailMessage, (err, result)=>{
               if(err){
-                console.log(err);
+                res.json({message: "Registration not complete please check your connection", status: false})
               }
               else{
-                console.log(result);
+                res.json({ message: `User registered successfully, navigate to your gmail account for your account number!`, status: true });
               }
             })
-            res.json({ message: `User registered successfully, navigate to your gmail account for your account number!`, status: true });
           }
         });
       }

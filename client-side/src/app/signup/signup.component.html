@@ -3,8 +3,8 @@
     <div class="borde borde-primary shadow-sm rounded-1">
         
         <h3 class="text-center card-header bg-primary rounded-3 text-light py-2">Create Your Account</h3>
-        <small class="alert alert-danger py-0" *ngIf="message != ''">{{message}}</small>
-        <small class="alert py-1 {{resStatus? 'alert-success' : 'alert-danger'}} " *ngIf="">{{resMessage}}</small>
+        <!-- <small class="alert alert-danger py-0" *ngIf="message != ''">{{message}}</small> -->
+        <small class="alert py-1 {{resStatus? 'alert-success' : 'alert-danger'}} " *ngIf="message != ''">{{resMessage}}</small>
         <form [formGroup]="formGroup" (submit)="handleRegister()">
         <div class="row">
             <div class="form-group col-md-6 my-3">
@@ -91,5 +91,6 @@
             
         </button>
     </form>
+    <a href="mailto:johnfixit293@gmail.com">Click to send mail</a>
     </div>
 </div>

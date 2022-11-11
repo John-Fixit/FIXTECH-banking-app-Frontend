@@ -1,10 +1,8 @@
 
 import { Component, Input, OnInit } from '@angular/core';
 import { navData } from './nav-data';
-interface SideNavToggle{
-  screenWidth: number;
-  collapsed: boolean;
-}
+// import { faFilm } from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
@@ -12,7 +10,7 @@ interface SideNavToggle{
 
 })
 export class SidenavComponent implements OnInit {
-
+  // public faFim = faFilm
   public navData = navData
   @Input() sideNavStatus:boolean = false;
   constructor() { }
