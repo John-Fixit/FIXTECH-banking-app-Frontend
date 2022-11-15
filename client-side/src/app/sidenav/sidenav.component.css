@@ -20,9 +20,7 @@
     margin-bottom: 0.625rem;
     border-radius: 0.625rem;
 }
-.nav-list-open .sidenav-nav-item:hover {
-    background-color: rgb(201, 192, 192);
-}
+
 .sidenav-nav-link{
     display: flex;
     align-items: center;
@@ -35,6 +33,10 @@
     min-width: 2rem;
     margin: 0 0.5rem;
     text-align: center;
+}
+.sidenav-nav-link:hover{
+    background-color: rgb(201, 192, 192);
+    color: rgb(3, 3, 49);
 }
 .router-link-active{
     background-color: rgb(201, 192, 192);

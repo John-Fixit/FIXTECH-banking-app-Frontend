@@ -14,7 +14,12 @@ nav{
 }
 .nav-header-color{
     background: rgb(5, 5, 129);
+    display: flex;
+    align-items: center;
 }
 .nav-link{
     color: white;
+}
+.navbar-brand{
+    align-items: center;
 }

@@ -32,7 +32,6 @@ const PORT = process.env.PORT
 app.use('/', userRouter)
 // app.use('/admin')
 
-
 app.listen(PORT, ()=>{
     console.log(`App is listening on port: ${PORT}`);
 })

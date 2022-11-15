@@ -3,12 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { HomeComponent } from './home/home.component';
+import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from './login/login.component';
 import { SettingsComponent } from './settings/settings.component';
 import { SignupComponent } from './signup/signup.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 
 const routes: Routes = [
+  {path: "", component: LandingComponent, title: "FICOM"},
   {path: "register", component: SignupComponent, title: 'Register'},
   {path: "login", component: LoginComponent, title: 'Login'},
   {path: 'home', children: [

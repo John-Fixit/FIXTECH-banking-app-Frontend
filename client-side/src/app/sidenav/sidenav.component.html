@@ -1,16 +1,30 @@
 <div class="side-nav-content">
     <ul class="sidenav-nav" [ngClass]="{'nav-list-open': sideNavStatus}">
-        <li class="nav-list-item list-unstyled sidenav-nav-item" *ngFor="let routeItem of navData">
-            <a href="" class="text-decoration-none sidenav-nav-link" routerLink="{{routeItem.route}}" routerLinkActive="router-link-active">
-                <i class="nav-icon {{routeItem.icon}}">{{routeItem.myIcon}}</i>
-                <span class="mx-3">{{routeItem.name}}</span>
+        <li class="nav-list-item list-unstyled sidenav-nav-item" >
+            <a href="" class="text-decoration-none sidenav-nav-link" routerLink="/home/" routerLinkActive="router-link-active">
+                <fa-icon [icon]="icons.faHome"></fa-icon>
+                <span class="mx-3">Dashboard</span>
+            </a>
+        </li>
+        <li class="nav-list-item list-unstyled sidenav-nav-item" >
+            <a href="" class="text-decoration-none sidenav-nav-link" routerLink="/home/setting" routerLinkActive="router-link-active">
+                <fa-icon [icon]="icons.faGear"></fa-icon>
+                <span class="mx-3">Transaction</span>
+            </a>
+        </li>
+        <li class="nav-list-item list-unstyled sidenav-nav-item" >
+            <a href="" class="text-decoration-none sidenav-nav-link" routerLink="/home/setting" routerLinkActive="router-link-active">
+                <fa-icon [icon]="icons.faGear"></fa-icon>
+                <span class="mx-3">Setting</span>
             </a>
         </li>
     </ul>
     <li class="nav-list list-unstyled side-nav-item mx-2">
         <a href="" class="text-decoration-none sidenav-nav-link">
-            <i class="nav-icon fa fa-download">ICN</i>
+            <fa-icon [icon]="icons.faSignOutAlt"></fa-icon>
             <span class="mx-3 text-danger">Logout</span>
         </a>
     </li>
 </div>
+
+

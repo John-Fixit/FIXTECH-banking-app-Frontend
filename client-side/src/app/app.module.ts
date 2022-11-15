@@ -17,8 +17,9 @@ import { SettingsComponent } from './settings/settings.component';
 import { HeaderComponent } from './header/header.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { FooterComponent } from './pages/footer/footer.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { StatisticsComponent } from './pages/statistics/statistics.component';
+import { LandingComponent } from './landing/landing.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +35,8 @@ import { StatisticsComponent } from './pages/statistics/statistics.component';
     HeaderComponent,
     UserProfileComponent,
     FooterComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    LandingComponent
   ],
   imports: [
     BrowserModule,

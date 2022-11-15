@@ -1,7 +1,7 @@
 
 import { Component, Input, OnInit } from '@angular/core';
 import { navData } from './nav-data';
-// import { faFilm } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faGear, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-sidenav',
@@ -10,12 +10,15 @@ import { navData } from './nav-data';
 
 })
 export class SidenavComponent implements OnInit {
-  // public faFim = faFilm
+
+  icons = { faHome, faGear, faSignOutAlt }
   public navData = navData
   @Input() sideNavStatus:boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {
+    console.log(navData);
     
   }
 

@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UsersService } from '../services/users.service'
 import { Router } from '@angular/router'
-
+import { faBars, faCross, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash, faMoneyBill } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -10,6 +11,7 @@ import { Router } from '@angular/router'
 export class DashboardComponent implements OnInit {
 public eyeSwitch:boolean = false
 public userDetail:any = undefined;
+icons = { faEye, faEyeSlash, faMoneyBill }
   constructor(
     public userService : UsersService,
     public router : Router
@@ -24,6 +26,8 @@ public userDetail:any = undefined;
         if(res.status){
           localStorage.setItem('userDetail', JSON.stringify(res.userDetail))
           this.userDetail = res.userDetail;
+          console.log(this.userDetail);
+          
         }
         else{
           localStorage.removeItem('userToken')
