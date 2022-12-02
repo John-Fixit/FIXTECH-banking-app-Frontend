@@ -2,11 +2,52 @@
 <main>
     <app-sidenav class=" shadow" [sideNavStatus]="sideNavStatus" [ngClass]="{'app-side-nav-open': sideNavStatus}">
     </app-sidenav>
-    <div class="display-area p-3" [ngClass]="{'display-area-shrink': sideNavStatus}">
-        <p class="fs-3 fw-bold fst-italic">main display area</p>
-        <div class="space-start">
-           
-        </div>
+    <div class="display-area" [ngClass]="{'display-area-shrink': sideNavStatus}">
+        <h1 class="bg-danger p-2 text-light">Profile Setting</h1>
+        <div class="container">
+               <div class="profile_picture text-center">
+                <img src="{{userDetail !== undefined? (userDetail['profile_picture'] == '')? 'assets/user.jpg' : userDetail['profile_picture']
+                : 'assets/user.jpg'}}" alt="loading" class="rounded-circle border" style="height: 150px; width: 150px;">
+                <label for="myFile">
+                    <fa-icon [icon]="pencil" style="color: navy; cursor: pointer;"></fa-icon>
+                    <input type="file" class="d-none" id="myFile" (change)="selectFile($event)">
+                </label>
+                </div>
+               <div class="content p-3">
+                <div class="row content_list_column">
+                    <div class="col-sm-6 p-2 my-3" *ngFor="let item of thisData">
+                        <div class="content_item shadow-sm rounded" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="modalOutEdit({text:item.bold_text})">
+                            <fa-icon [icon]="item.icon" style="font-size: 3vh;"></fa-icon>
+                            <div class="item_text">
+                                <b>{{item.bold_text}}</b>
+                            <p class="text-muted">{{item.light_text}}</p>
+                            </div>
+                            <fa-icon [icon]="greaterSign" class="text-danger" style="font-size: 2vh"></fa-icon>
+                        </div>
+                    </div>
+                </div>
+               </div>
+               <!-- modal column -->
+               <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                   <div class="modal-content">
+                     <div class="modal-header">
+                       <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                     </div>
+                     <div class="modal-body">
+                       ...
+                     </div>
+                     <div class="modal-footer">
+                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                       <button type="button" class="btn btn-primary">Save changes</button>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+
+
+            </div>
     </div>
 </main>
 

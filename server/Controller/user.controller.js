@@ -199,6 +199,7 @@ const uploadUserPicture = (req, res) => {
         { _id: userDet.id },
         { profile_picture: result.secure_url },
         (err, result) => {
+          console.log(result);
           if (err) {
             res.json({
               message: `Internal server error, profile picture not saved, please try again`,
@@ -209,7 +210,8 @@ const uploadUserPicture = (req, res) => {
               message: `Profile picture uploaded successfully`,
               status: true,
               pictureUrl,
-            });
+            }); 
+            // 07026329525
           }
         }
       );
@@ -217,16 +219,41 @@ const uploadUserPicture = (req, res) => {
   });
 };
 const getUserDetail = (req, res) => {
-  console.log(req.params);
-  // userModel.findById({id: })
+  const id = req.params.id
+  userModel.findById({_id: id}, (err, user)=>{
+    if(err){
+      res.json({message: "Internal server error, please check your connection!", status: false})
+    }
+    else{
+      res.json({userDetail: user, status: true})
+    }
+  })
 };
+const getAllUsers=(req, res)=>{
+    userModel.find((err, data)=>{
+        if(err){
+          res.json({message: "Internal server error, fetching allusers failed", status: false})
+        }
+        else{
+          res.json({allUsers: data, status: true});
+        }
+    })
+}
 
+const transferFunc=(req, res)=>{
+    let reqBody = req.body
+    console.log(reqBody)
+    res.json(reqBody)
+}
 module.exports = {
-  getRes,
+  getRes, 
   signup,
   signin,
-  // googleCallback,
   authorizeFunc,
   uploadUserPicture,
   getUserDetail,
+  getAllUsers,
+  transferFunc
 };
+
+

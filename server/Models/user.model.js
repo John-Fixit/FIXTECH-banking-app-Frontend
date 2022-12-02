@@ -9,6 +9,8 @@ const userSchema = new mongoose.Schema({
     totalBalance: Number,
     profile_picture: String,
     password: String,
+    address: String,
+    dob: String,
     transactionType: [],
 })
 

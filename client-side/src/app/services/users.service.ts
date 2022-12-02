@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
-export class UsersService {
+export class UsersService implements OnInit{
   public url = environment.url
   public userToken:any = ""
 
@@ -14,8 +14,13 @@ export class UsersService {
     public router : Router
   ) { }
 
+  ngOnInit(): void {
+    
+  }
+
+
   //authorization code
-  getUser(){
+  authorizeUser(){
     if(localStorage['userToken']){
       this.userToken =  JSON.parse(localStorage['userToken'])
     }
@@ -35,4 +40,13 @@ export class UsersService {
   registerUser(userDetail:any){
       return this.http.post<any>(`${this.url}/auth`, userDetail)
   }
+  //get particular user details
+  getUserDetail(userId:any){
+      return this.http.get<any>(`${this.url}/getUserDetail/${userId}`)
+  }
+  //get all the users
+  getUsers(){
+      return this.http.get<any>(`${this.url}/users`)
+  }
+
 }

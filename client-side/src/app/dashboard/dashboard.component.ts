@@ -22,12 +22,10 @@ icons = { faEye, faEyeSlash, faMoneyBill }
 
   ngOnInit(): void {
     // this.userDetail = JSON.parse(localStorage['userDetail'])
-    this.userService.getUser().subscribe(res=>{
+    this.userService.authorizeUser().subscribe(res=>{
         if(res.status){
           localStorage.setItem('userDetail', JSON.stringify(res.userDetail))
-          this.userDetail = res.userDetail;
-          console.log(this.userDetail);
-          
+          this.userDetail = res.userDetail;  
         }
         else{
           localStorage.removeItem('userToken')

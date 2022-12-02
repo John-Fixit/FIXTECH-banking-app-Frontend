@@ -1,8 +1,8 @@
 
 import { Component, Input, OnInit } from '@angular/core';
-import { navData } from './nav-data';
-import { faHome, faGear, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
-
+import { faHome, faGear, faSignOutAlt, faMoneyCheckAlt, faUserAlt } from '@fortawesome/free-solid-svg-icons';
+import { UsersService } from '../services/users.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
@@ -11,15 +11,49 @@ import { faHome, faGear, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 })
 export class SidenavComponent implements OnInit {
 
-  icons = { faHome, faGear, faSignOutAlt }
-  public navData = navData
+  logout = faSignOutAlt 
   @Input() sideNavStatus:boolean = false;
 
-  constructor() { }
+  public id: any = JSON.parse(localStorage['userDetail'])['_id'];
+  public navData:any = [
+    {
+        route: "/home/",
+        name: "Dashboard",
+        icon: faHome
+    },
+    {
+        route: "/home/transfer",
+        name: "Transaction",
+        icon: faMoneyCheckAlt
+    },
+    {
+        route: `/home/profile/${this.id}`,
+        name: "Profile",
+        icon: faUserAlt
+    },
+    {
+        route: "/home/setting",
+        name: "Setting",
+        icon: faGear
+    },
+
+]
+  constructor(
+    public userService : UsersService,
+    public router: Router
+  ) { }
 
   ngOnInit(): void {
-    console.log(navData);
-    
+
   }
+
+  logOut(){
+      if(confirm('are you sure to log out')){
+        localStorage.removeItem('userToken')
+        this.router.navigate(['/login']);
+      }
+  }
+
+  
 
 }

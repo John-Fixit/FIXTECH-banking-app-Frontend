@@ -1,9 +1,21 @@
 <app-header (sideNavToggled)="sideNavStatus = $event"></app-header>
 <main>
     <app-sidenav class=" shadow" [sideNavStatus]="sideNavStatus" [ngClass]="{'app-side-nav-open': sideNavStatus}"></app-sidenav>
-    <div class="display-area p-3" [ngClass]="{'display-area-shrink': sideNavStatus}">
-        <div class="container">
-            <h1>Welcome to profile page {{userId}}</h1>
-        </div>
+    <div class="display-area" [ngClass]="{'display-area-shrink': sideNavStatus}">
+            <h1 class="h1_text p-2 ">WELCOME TO YOUR PROFILE!</h1>
+            <div class="container shadow-sm">
+                <div class="profile_picture">
+                    <img src="{{userDetail !== undefined? (userDetail['profile_picture'] == '')? 'assets/user.jpg' : userDetail['profile_picture']
+                    : 'assets/user.jpg'}}" alt="loading" class="rounded-circle" style="height: 120px; width: 120px;">
+                   </div>
+                    <div class="row p-3 content">
+                        <div class="col-sm-6 my-2" *ngFor="let item of detail">
+                            <label for="" class="fw-bold text-danger">{{item.name}}</label>
+                            <p class="customer_name py-2" >{{item.value}}</p>
+                        </div>
+                    </div>
+                   
+            </div>
+           
     </div>
 </main>

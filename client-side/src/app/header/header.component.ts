@@ -17,8 +17,8 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.userService.getUser().subscribe(res=>{
-       this.avatar = res.profile_picture
+    this.userService.authorizeUser().subscribe((res)=>{
+      this.avatar = res.userDetail.profile_picture
     })
    
     

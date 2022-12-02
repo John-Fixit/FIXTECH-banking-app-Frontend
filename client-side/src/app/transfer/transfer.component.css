@@ -1,0 +1,14 @@
+.input-group{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid navy; 
+}
+.bg-color{
+    background-color: navy;
+    color: white;
+}
+
+input:focus{
+    outline: none;
+}

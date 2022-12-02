@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
       this.http.post<any>(`${this.loginUrl}/authLogin`, {accountNumber, password}).subscribe(res=>{
         if(res.status){
           localStorage.setItem('userToken', JSON.stringify(res.token))
-              this.route.navigate(['/home/dashboard'])
+              this.route.navigate(['/home/'])
         }
         else{
             this.message = res.message

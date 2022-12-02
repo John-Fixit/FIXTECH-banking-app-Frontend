@@ -47,7 +47,7 @@ export class SignupComponent implements OnInit {
       contact: this.formGroup.value['contact'], 
       password: this.formGroup.value['password'], 
       accountNumber: accountNumber, 
-      totalBalance: 1550,
+      totalBalance: 1000,
       transactionType: [],
       profile_picture: ""
     }

@@ -3,12 +3,12 @@
         <fa-icon [icon]="icons.faBars" class="fs-4" *ngIf="!menuStatus"></fa-icon>
         <fa-icon [icon]="icons.faTimes" class="fs-4" *ngIf="menuStatus"></fa-icon>
     </div>
-    <h1><a href="" routerLink="/home/dashboard" class="navbar-brand px-4 fs-3 text-light fw-bold">FIXCOM</a></h1>
+    <h1><a href="" routerLink="/home/" class="navbar-brand px-4 fs-3 text-light fw-bold">FIXTECH</a></h1>
     <div class="navbar-collapse">
         <ul class="navbar-nav ms-auto">
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link" role="button" data-bs-toggle="dropdown">
-                    <img src="assets/user.jpg" style="height: 50px; width: 50px;" class="rounded-circle"
+                    <img src="{{ (avatar == '')? 'assets/user.jpg' : avatar}}" style="height: 50px; width: 50px;" class="rounded-circle"
                         alt="profile photo">
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark">
@@ -17,6 +17,7 @@
                     <li><a href="" class="dropdown-item">Log out</a></li>
                 </ul>
             </li>
+            
         </ul>
     </div>
 </nav>

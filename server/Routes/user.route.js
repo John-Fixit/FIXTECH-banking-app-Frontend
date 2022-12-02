@@ -9,5 +9,7 @@ userRouter.post('/auth', userController.signup)
 userRouter.post('/authLogin', userController.signin)
 userRouter.get('/authorizeUser', userController.authorizeFunc)
 userRouter.post('/uploadUserPicture', userController.uploadUserPicture)
-userRouter.get('getUserDetail/:id', userController.getUserDetail)
+userRouter.get('/getUserDetail/:id', userController.getUserDetail)
+userRouter.get('/users', userController.getAllUsers)
+userRouter.post('/transfer', userController.transferFunc)
 module.exports = userRouter

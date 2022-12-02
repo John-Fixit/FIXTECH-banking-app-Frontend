@@ -1,0 +1,9 @@
+*{
+    height: 100vh !important;
+}
+.container {
+    margin-top: 5rem;
+}
+.h1_text{
+    font-size: 3rem;
+}

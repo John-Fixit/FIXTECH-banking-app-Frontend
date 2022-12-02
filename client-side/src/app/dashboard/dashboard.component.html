@@ -6,60 +6,69 @@
         <div class="">
             <div class="shadow-sm py-2">
                 <h4 class="bn_firstColor ps-2 text-danger fs-3 fw-bold">Dashboard</h4>
-                <h2 class="bn_firstColor ps-2"><small class="textColor">Hello</small> {{userDetail !==undefined? (userDetail.firstname + " "+ userDetail.lastname): "user"}} <small class="fs-6 text-primary">Welcome back!</small></h2>
+                <h2 class="bn_firstColor ps-2"><small class="textColor">Hello</small> {{userDetail !==undefined?
+                    (userDetail.firstname + " "+ userDetail.lastname): "user"}} <small class="fs-6 text-primary">Welcome
+                        back!</small></h2>
                 <h5 class="ps-4"></h5>
             </div>
-            <div class="row mx-auto my-3">
-                <div class="col-lg-4 my-2">
-                    <div class="h-100 py-2 shadow border-0">
-                        <div class="text-center">
-                            <p class="fs-5 bn_secondColor">Account Balance
-                                <span class="float-end mx-2 cursorPointer" (click)="switchEye()">
-                                    <fa-icon *ngIf="!eyeSwitch" [icon]="icons.faEye"></fa-icon>
-                                    <fa-icon *ngIf="eyeSwitch" [icon]="icons.faEyeSlash"></fa-icon>
-                                </span>
-                              
-                            </p>
-                            <h1 *ngIf="eyeSwitch" class="fw-bold">{{userDetail !== undefined? (userDetail.totalBalance| currency:'USD')
-                                : 000| currency:'USD'}}</h1>
+            <div class="scrollableForm">
+                <div class="row mx-auto my-3">
+                    <div class="col-lg-4 my-2">
+                        <div class="h-100 py-2 shadow border-0">
+                            <div class="text-center">
+                                <p class="fs-6 bn_secondColor">Account Balance
+                                    <span class="float-end mx-2 cursorPointer" (click)="switchEye()">
+                                        <fa-icon *ngIf="!eyeSwitch" [icon]="icons.faEye" class="fs-6"></fa-icon>
+                                        <fa-icon *ngIf="eyeSwitch" [icon]="icons.faEyeSlash" class="fs-6"></fa-icon>
+                                    </span>
 
-                            <h1 *ngIf="!eyeSwitch">xxxxx</h1>
+                                </p>
+                                <h1 *ngIf="eyeSwitch" class="fw-bold">{{userDetail !== undefined?
+                                    (userDetail.totalBalance| currency:'USD')
+                                    : 000| currency:'USD'}}</h1>
+
+                                <h1 *ngIf="!eyeSwitch">xxxxx</h1>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4 my-2">
-                    <div class="h-100 py-2 shadow border-0">
-                        <div class="text-center">
-                            <p class="fw-bold bn_secondColor">Last Transaction</p>
-                            <div class="row">
-                                <div class="col-6 border-end">
-                                    <p class="fw-bold bn_secondColor">Credit</p>
-                                    
-                                    <h4> {{ userDetail !== undefined ? (userDetail.transactionType.length? (userDetail.transactionType.length[0].length-1 | currency:'USD') : 000| currency: 'USD') : 000| currency: 'USD'}}</h4>
-                                </div>
-                                <div class="col-6 border-start">
-                                    <p class="fw-bold bn_secondColor">Debit</p>
-                                    <h4> {{ userDetail !== undefined ? (userDetail.transactionType.length? (userDetail.transactionType.length[1].length-1 | currency:'USD') : 000| currency: 'USD') : 000| currency: 'USD'}}</h4>
-                                
+                    <div class="col-lg-4 my-2">
+                        <div class="h-100 py-2 shadow border-0">
+                            <div class="text-center">
+                                <p class="fw-bold bn_secondColor">Last Transaction</p>
+                                <div class="row">
+                                    <div class="col-6 border-end">
+                                        <p class="fw-bold bn_secondColor">Credit</p>
+
+                                        <h4> {{ userDetail !== undefined ? (userDetail.transactionType.length?
+                                            (userDetail.transactionType.length[0].length-1 | currency:'USD') : 000|
+                                            currency: 'USD') : 000| currency: 'USD'}}</h4>
+                                    </div>
+                                    <div class="col-6 border-start">
+                                        <p class="fw-bold bn_secondColor">Debit</p>
+                                        <h4> {{ userDetail !== undefined ? (userDetail.transactionType.length?
+                                            (userDetail.transactionType.length[1].length-1 | currency:'USD') : 000|
+                                            currency: 'USD') : 000| currency: 'USD'}}</h4>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4 my-2">
-                    <div class="h-100 py-2 shadow border-0">
-                        <div class="text-center">
-                            <p class="fw-bold bn_secondColor">
-                                Account Number
-                            </p>
-                            <h4 class="fw-bold">
-                                {{ userDetail !== undefined ? userDetail.accountNumber : "xxxxxxxxxx"}}
-                            </h4>
+                    <div class="col-lg-4 my-2">
+                        <div class="h-100 py-2 shadow border-0">
+                            <div class="text-center">
+                                <p class="fw-bold bn_secondColor">
+                                    Account Number
+                                </p>
+                                <h4 class="fw-bold">
+                                    {{ userDetail !== undefined ? userDetail.accountNumber : "xxxxxxxxxx"}}
+                                </h4>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <app-statistics></app-statistics>
             </div>
-            <app-statistics></app-statistics>
         </div>
     </div>
 </main>

@@ -1,30 +1,19 @@
 <div class="side-nav-content">
     <ul class="sidenav-nav" [ngClass]="{'nav-list-open': sideNavStatus}">
-        <li class="nav-list-item list-unstyled sidenav-nav-item" >
-            <a href="" class="text-decoration-none sidenav-nav-link" routerLink="/home/" routerLinkActive="router-link-active">
-                <fa-icon [icon]="icons.faHome"></fa-icon>
-                <span class="mx-3">Dashboard</span>
-            </a>
-        </li>
-        <li class="nav-list-item list-unstyled sidenav-nav-item" >
-            <a href="" class="text-decoration-none sidenav-nav-link" routerLink="/home/setting" routerLinkActive="router-link-active">
-                <fa-icon [icon]="icons.faGear"></fa-icon>
-                <span class="mx-3">Transaction</span>
-            </a>
-        </li>
-        <li class="nav-list-item list-unstyled sidenav-nav-item" >
-            <a href="" class="text-decoration-none sidenav-nav-link" routerLink="/home/setting" routerLinkActive="router-link-active">
-                <fa-icon [icon]="icons.faGear"></fa-icon>
-                <span class="mx-3">Setting</span>
+        <li class="nav-list-item list-unstyled sidenav-nav-item" *ngFor="let item of navData">
+            <a class="text-decoration-none sidenav-nav-link" routerLink="{{item.route}}" routerLinkActive="router-link-active">
+                <fa-icon [icon]="item.icon"></fa-icon>
+                <span class="mx-3">{{item.name}}</span>
             </a>
         </li>
     </ul>
     <li class="nav-list list-unstyled side-nav-item mx-2">
-        <a href="" class="text-decoration-none sidenav-nav-link">
-            <fa-icon [icon]="icons.faSignOutAlt"></fa-icon>
+        <a href="" class="text-decoration-none sidenav-nav-link" (click)="logOut()">
+            <fa-icon [icon]="logout"></fa-icon>
             <span class="mx-3 text-danger">Logout</span>
         </a>
     </li>
+
 </div>
 
 

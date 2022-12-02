@@ -8,8 +8,6 @@ import { SignupComponent } from './signup/signup.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
-import { HomeComponent } from './home/home.component';
-import { BodyComponent } from './body/body.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { TransferComponent } from './transfer/transfer.component';
@@ -20,14 +18,14 @@ import { FooterComponent } from './pages/footer/footer.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { StatisticsComponent } from './pages/statistics/statistics.component';
 import { LandingComponent } from './landing/landing.component';
+import { LandingNavComponent } from './pages/landing-nav/landing-nav.component';
+import { CheckUserPipe } from './pipes/check-user.pipe';
 @NgModule({
   declarations: [
     AppComponent,
     SignupComponent,
     LoginComponent,
-    HomeComponent,
     ErrorPageComponent,
-    BodyComponent,
     SidenavComponent,
     DashboardComponent,
     TransferComponent,
@@ -36,7 +34,9 @@ import { LandingComponent } from './landing/landing.component';
     UserProfileComponent,
     FooterComponent,
     StatisticsComponent,
-    LandingComponent
+    LandingComponent,
+    LandingNavComponent,
+    CheckUserPipe
   ],
   imports: [
     BrowserModule,

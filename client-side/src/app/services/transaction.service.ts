@@ -5,15 +5,16 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class ApiService {
-  public url = environment.url
+export class TransactionService {
+  private baseUrl = environment.url
   constructor(
-    private http : HttpClient
+      private _http : HttpClient
   ) { }
- 
-    getUser(userId: any){
-      console.log(userId);
-      
-        return this.http.get<any>(`${this.url}/getUserDetail/${userId}`)
+
+//transfer
+    transferFunc(params: any){
+      return this._http.post(`${this.baseUrl}/transfer`, params)
     }
+
+
 }

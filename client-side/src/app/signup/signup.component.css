@@ -1,3 +1,8 @@
+.scrollableForm{
+    margin-top: 3vh;
+    height: 83vh;
+    overflow-y: auto;
+}
 .rounded{
     background-color: rgb(3, 3, 49);
     color: white ;
