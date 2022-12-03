@@ -242,8 +242,42 @@ const getAllUsers=(req, res)=>{
 
 const transferFunc=(req, res)=>{
     let reqBody = req.body
-    console.log(reqBody)
-    res.json(reqBody)
+    userModel.findById({_id: reqBody.senderId}, (err, senderData)=>{
+        if(err){
+          res.json({message: `internal server error, please check your connection!`, status: false})
+        }
+        else{
+            senderData.totalBalance -= parseInt(reqBody.amount)
+            senderData.transactionType.push(reqBody.senderTransactionDetail)
+
+            userModel.findById({_id: reqBody.recipientId}, (err, recipientData)=>{
+              if(err){
+                res.json({message: `internal server error, please check your connection!`, status: false})
+              }
+              else{
+                recipientData.totalBalance += parseInt(reqBody.amount)
+                recipientData.transactionType.push(reqBody.recipientTransactionDetail)
+                
+                //sender execution code
+                userModel.findOneAndUpdate({'_id': reqBody.senderId}, { $set: {'totalBalance': senderData.totalBalance, transactionType: senderData.transactionType}}, (err, result)=>{
+                     //recipient execution code
+                userModel.findOneAndUpdate({'_id': reqBody.recipientId}, { $set: {'totalBalance': recipientData.totalBalance, transactionType: recipientData.transactionType}}, (err, result)=>{
+                  //execution result
+                  if(err){
+                      res.json({message: 'Error occurred, connection time out!', status: false})
+                  }
+                  else{
+                    res.json({message: 'Transfer done successfully', status: true})
+                  }
+                })
+
+                })
+
+              }
+            })
+        }
+    })
+    
 }
 module.exports = {
   getRes, 

@@ -99,26 +99,32 @@ export class TransferComponent implements OnInit {
 
   confirmTransfer(){
       let currentUserBalance = this.thisUser.totalBalance
-      console.log(currentUserBalance);
       
       if(currentUserBalance < this.amtToTransfer){
         this.confirmTransferErr = true
         this.confirmTransferMessage = "Your account balance is insufficient to complete the transaction!"
-        console.log(this.confirmTransferMessage);
       }
       else{
-          let transactionType = {type: 'transfer', sender: `${this.thisUser.firstname} ${this.thisUser.lastname}`, recipient: `${this.recipientDetail.firstname} ${this.recipientDetail.lastname}`, recipientAccountNumber: this.recipientDetail.accountNumber, timeStamp: new Date()};
+          let senderTransactionDetail = {type: 'debit', recipient: `${this.recipientDetail.firstname} ${this.recipientDetail.lastname}`, recipientAccountNumber: this.recipientDetail.accountNumber, timeStamp: new Date(), transactionName: 'transfer'};
+          
+          let recipientTransactionDetail = {type: 'credit', sender: `${this.thisUser.firstname} ${this.thisUser.lastname}`, recipientAccountNumber: this.recipientDetail.accountNumber, timeStamp: new Date(), transactionName: 'recieved'};
 
-          let transferDetail = {senderId: this.thisUser._id, recipientId: this.recipientDetail._id, amount: this.amtToTransfer, transactionType}
+          let transferDetail = {senderId: this.thisUser._id, recipientId: this.recipientDetail._id, amount: this.amtToTransfer, senderTransactionDetail, recipientTransactionDetail}
 
           this._transactionService.transferFunc(transferDetail).subscribe((res:any)=>{
-            console.log(res);
+            if(res.status){
+                this.confirmTransferErr = false;
+                this.confirmTransferMessage = res.message;
+                this.beneficiary_accNumber = "";
+                this.errStatus = undefined
+            }
+            else{
+              this.confirmTransferErr = true;
+              this.confirmTransferMessage = res.message;
+            }
           }, (err)=>{
             console.log(err);
           })
-          
-          console.log(transactionType);
-          console.log(transferDetail );
           
       }
   }
