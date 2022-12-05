@@ -15,6 +15,10 @@ export class TransactionService {
     transferFunc(params: any){
       return this._http.post(`${this.baseUrl}/transfer`, params)
     }
+//fund account
+   fundAccount(params: any){
+      return this._http.post(`${this.baseUrl}/topUpWithCard`, params)
+   }
 
 
 }

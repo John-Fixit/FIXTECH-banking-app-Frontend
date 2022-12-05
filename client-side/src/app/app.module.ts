@@ -23,6 +23,7 @@ import { CheckUserPipe } from './pipes/check-user.pipe';
 import { AddMoneyComponent } from './add-money/add-money.component';
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
 import { Angular4PaystackModule } from 'angular4-paystack';
+import { AngularToastifyModule, ToastService } from 'angular-toastify';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,9 +52,10 @@ import { Angular4PaystackModule } from 'angular4-paystack';
     BrowserAnimationsModule,
     HttpClientModule,
     FontAwesomeModule,
-    Angular4PaystackModule
+    AngularToastifyModule,
+    Angular4PaystackModule.forRoot('pk_test_8e0adf1d74b3595f09d84c9b4ec645477eeb20fd'),
   ],
-  providers: [],
+  providers: [ToastService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

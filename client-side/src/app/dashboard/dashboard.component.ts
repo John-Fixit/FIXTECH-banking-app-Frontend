@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { UsersService } from '../services/users.service'
 import { Router } from '@angular/router'
 import { faEye, faEyeSlash, faMoneyBill, faMoneyCheckAlt, faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
+import { ToastService } from 'angular-toastify'
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -15,7 +16,8 @@ export class DashboardComponent implements OnInit {
   icons = { faEye, faEyeSlash, faMoneyBill }
   constructor(
     public userService : UsersService,
-    public router : Router
+    public router : Router,
+    public _toastService: ToastService
   ) { 
     
   }
@@ -38,4 +40,8 @@ export class DashboardComponent implements OnInit {
   switchEye(){
       this.eyeSwitch = !this.eyeSwitch;
   }
+
+     addInfoToast() {
+    this._toastService.success('message');
+ }
 }

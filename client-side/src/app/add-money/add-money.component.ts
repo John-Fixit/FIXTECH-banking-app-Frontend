@@ -1,6 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { faMoneyCheck, faMoneyBillTransfer, faIdCardAlt, faMoneyCheckAlt, faGreaterThan as greaterSign, faBank, faCopy, faUserAlt } from "@fortawesome/free-solid-svg-icons"
+import { environment } from 'src/environments/environment';
+import { TransactionService } from '../services/transaction.service';
 import { UsersService } from '../services/users.service';
+import { ToastService } from 'angular-toastify';
 @Component({
   selector: 'app-add-money',
   templateUrl: './add-money.component.html',
@@ -12,10 +16,14 @@ export class AddMoneyComponent implements OnInit {
   bankIcon = faBank
   copyIcon = faCopy
   userIcon = faUserAlt
+  reference = ""
+  public response = ""
+  public responseErr:any = undefined
 
   public addMoneyType:any = ""
   public userDetail:any = undefined;
-  public amountToFund:number = 0 * 100
+  private baseUrl:any = environment.url
+  public amountToFund:any = parseInt("")
   public thisData= [
      {
          icon: faMoneyBillTransfer,
@@ -37,12 +45,14 @@ export class AddMoneyComponent implements OnInit {
          bold_text: "Request Money from Others",
          light_text: "You can change your mobile number"
      },
- ]
+  ]
 
 
 
   constructor(
-    private _userService: UsersService
+    private _userService: UsersService,
+    private _transactionService: TransactionService,
+    private _toastService: ToastService
   ) { }
 
   ngOnInit(): void {
@@ -50,22 +60,38 @@ export class AddMoneyComponent implements OnInit {
       if(res.status)this.userDetail = res.userDetail
       
     })
+    this.reference = `ref-${Math.ceil(Math.random() * 10e13)}`
   }
 
-modalOutFunc(params:any){
-    this.addMoneyType = params.title
-    console.log(params);
+  modalOutFunc(params:any){
+      this.addMoneyType = params.title
+    }
     
+    paymentCancel(){
+      alert('You want to close the payment gate')
+    }
+    paymentDone(params:any){
+      let transactionDetail = {type: 'credit', owner: `${this.userDetail.firstname} ${this.userDetail.lastname}`, recipientAccountNumber: this.userDetail.accountNumber, timeStamp: new Date(), transactionName: 'fund account', amount: parseInt(this.amountToFund)};
+      
+    let transferDetail = {userId: this.userDetail._id, amount: this.amountToFund, transactionDetail}
+
+    if(params.status == 'success'){
+      this._transactionService.fundAccount(transferDetail).subscribe((res:any)=>{
+        this.response = res.message
+        if(res.status){
+            console.log(res.message);
+            this.addInfoToast()
+            this.responseErr = false
+          }
+          else{
+            this.responseErr = true
+          }
+      })
+    }
+    
+  }
+  addInfoToast(){
+ this._toastService.success(this.response)
+  }
 }
 
-paymentCancel(){
-  alert('You want to close the payment gate')
-}
-paymentDone(params:any){
-  console.log(params);
-  
-}
-  
-
-
-}

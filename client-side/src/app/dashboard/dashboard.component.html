@@ -52,14 +52,24 @@
                                     Account Number
                                 </p>
                                 <h4 class="fw-bold">
-                                    {{ userDetail != undefined ? userDetail.accountNumber : "xxxxxxxxxx"}}
+                                    {{ userDetail != undefined ? userDetail.accountNumber : "0000000000"}}
                                 </h4>
                             </div>
                         </div>
                     </div>
                 </div>
+                <button (click)="addInfoToast()">
+
+                </button>
                 <div class="">
-                    
+                   <lib-toastify-toast-container
+                    [position]="'top-left'"
+                    [transition]="'slide'"
+                    [autoClose]="8000"
+                    [iconLibrary]="'material'"
+                    >
+
+                    </lib-toastify-toast-container>
                 </div>
                 <app-statistics></app-statistics>
             </div>

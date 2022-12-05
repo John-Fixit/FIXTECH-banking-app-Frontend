@@ -5,6 +5,10 @@
     <div class="display-area p-3" [ngClass]="{'display-area-shrink': sideNavStatus}">
         <div class="">
             <h1 class="ps-2 text-danger fw-bold">Add <span class="textColor">Money</span></h1>
+            <div *ngIf="responseErr != undefined">
+                <span class="alert alert-success p-1" *ngIf="responseErr == false">{{response}}</span>
+                <span class="alert alert-danger p-1" *ngIf="responseErr == true">{{response}}</span>
+            </div>
             <div class="row">
                 <div class="content p-3 col-sm-4">
                     <div class="row content_list_column">
@@ -90,7 +94,7 @@
                                 <label for="" class="fw-bold">Amount</label>
                                 <input type="number" class="form-control" placeholder="N100.00-9,999.00" [(ngModel)]="amountToFund">
                                 <div class="alert alert-warning my-2">
-                                    <b>Note:</b><span> For amount within N 100.00 - 9,999.00</span>
+                                    <b>Note:</b><span> For amount within $ 100.00 - 9,999.00</span>
                                 </div>
                             </div>
 
@@ -103,14 +107,23 @@
                             angular4-paystack
                             [key]="'pk_test_8e0adf1d74b3595f09d84c9b4ec645477eeb20fd'"
                             [email]='userDetail !== undefined? (userDetail.email): "mailempty@gmail.com"'
-                            [amount]='amountToFund'
-                            [ref]="'2637458697'"
+                            [amount]='amountToFund*100'
+                            [ref]="reference"
                             [class]="'btn btn-primary'"
                             (close)="paymentCancel()"
                             (callback)="paymentDone($event)"
+                            data-bs-dismiss="modal"
                             >
-Next</button>
+                            Next</button>
                         </div>
+                        <lib-toastify-toast-container
+                        [position]="'top-left'"
+                        [transition]="'slide'"
+                        [autoClose]="8000"
+                        [iconLibrary]="'material'"
+                        >
+
+                        </lib-toastify-toast-container>
                     </div>
                 </div>
             </div>

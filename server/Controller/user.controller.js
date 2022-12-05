@@ -211,7 +211,6 @@ const uploadUserPicture = (req, res) => {
               status: true,
               pictureUrl,
             }); 
-            // 07026329525
           }
         }
       );
@@ -277,7 +276,28 @@ const transferFunc=(req, res)=>{
             })
         }
     })
-    
+}
+
+const topUpWithCard=(req, res)=>{
+  const reqBody = req.body
+  userModel.findById({'_id': reqBody.userId}, (err, user) => {
+    if(err){
+      console.log(err);
+      res.json({message: 'Error occurred please check your internet connection!', status: false})
+    }
+    else{
+        user.totalBalance +=reqBody.amount
+        user.transactionType.push(reqBody.transactionDetail)
+        userModel.findOneAndUpdate({'_id': reqBody.userId}, {$set: {'totalBalance': user.totalBalance, 'transactionType': user.transactionType}}, (err, result)=>{
+          if(err) {
+              res.json({message: 'error occurred, please check your connection!', status: false})
+          }
+          else{ 
+              res.json({message: `Your account has been funded successfully with ${reqBody.amount}`, status: true})
+          }
+        })
+    }
+  })
 }
 module.exports = {
   getRes, 
@@ -287,7 +307,6 @@ module.exports = {
   uploadUserPicture,
   getUserDetail,
   getAllUsers,
-  transferFunc
+  transferFunc,
+  topUpWithCard
 };
-
-
