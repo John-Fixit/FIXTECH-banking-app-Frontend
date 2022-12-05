@@ -16,15 +16,14 @@
                     <div class="col-lg-4 my-2">
                         <div class="h-100 py-2 shadow border-0">
                             <div class="text-center">
-                                <p class="fs-6 bn_secondColor">Account Balance
+                                <p class="fs-6 fw-bold bn_secondColor textColor">Account Balance
                                     <span class="float-end mx-2 cursorPointer" (click)="switchEye()">
                                         <fa-icon *ngIf="!eyeSwitch" [icon]="icons.faEye" class="fs-6"></fa-icon>
-                                        <fa-icon *ngIf="eyeSwitch" [icon]="icons.faEyeSlash" class="fs-6"></fa-icon>
+                                        <fa-icon *ngIf="eyeSwitch" [icon]="icons.faEyeSlash" class="fs-6  text-danger"></fa-icon>
                                     </span>
-
                                 </p>
                                 <h1 *ngIf="eyeSwitch" class="fw-bold">{{userDetail !== undefined?
-                                    (userDetail.totalBalance| currency:'USD')
+                                    (userDetail.totalBalance | currency:'USD')
                                     : 000| currency:'USD'}}</h1>
 
                                 <h1 *ngIf="!eyeSwitch">xxxxx</h1>
@@ -34,21 +33,13 @@
                     <div class="col-lg-4 my-2">
                         <div class="h-100 py-2 shadow border-0">
                             <div class="text-center">
-                                <p class="fw-bold bn_secondColor">Last Transaction</p>
+                                <p class="fw-bold textColor">Last Transaction</p>
                                 <div class="row">
-                                    <div class="col-6 border-end">
-                                        <p class="fw-bold bn_secondColor">Credit</p>
-
-                                        <h4> {{ userDetail !== undefined ? (userDetail.transactionType.length?
-                                            (userDetail.transactionType.length[0].length-1 | currency:'USD') : 000|
+                                    <div class="col-12 border-end">
+                                        <p class="textColor">{{lastTransaction.type| titlecase}}</p>
+                                        <h4> {{ userDetail !== undefined ? (userDetail.transactionType.length? 
+                                            (lastTransaction.amount | currency:'USD') : 000|
                                             currency: 'USD') : 000| currency: 'USD'}}</h4>
-                                    </div>
-                                    <div class="col-6 border-start">
-                                        <p class="fw-bold bn_secondColor">Debit</p>
-                                        <h4> {{ userDetail !== undefined ? (userDetail.transactionType.length?
-                                            (userDetail.transactionType.length[1].length-1 | currency:'USD') : 000|
-                                            currency: 'USD') : 000| currency: 'USD'}}</h4>
-
                                     </div>
                                 </div>
                             </div>
@@ -57,15 +48,18 @@
                     <div class="col-lg-4 my-2">
                         <div class="h-100 py-2 shadow border-0">
                             <div class="text-center">
-                                <p class="fw-bold bn_secondColor">
+                                <p class="fw-bold textColor">
                                     Account Number
                                 </p>
                                 <h4 class="fw-bold">
-                                    {{ userDetail !== undefined ? userDetail.accountNumber : "xxxxxxxxxx"}}
+                                    {{ userDetail != undefined ? userDetail.accountNumber : "xxxxxxxxxx"}}
                                 </h4>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="">
+                    
                 </div>
                 <app-statistics></app-statistics>
             </div>

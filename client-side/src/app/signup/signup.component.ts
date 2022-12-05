@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsersService } from '../services/users.service';
 import { FormBuilder, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-signup',
@@ -20,6 +20,7 @@ export class SignupComponent implements OnInit {
     public navigateRoute : Router,
     public userService: UsersService,
     public formBuilder : FormBuilder,
+    private _http: HttpClient
   ) { }
 
   ngOnInit(): void {
@@ -52,28 +53,43 @@ export class SignupComponent implements OnInit {
       profile_picture: ""
     }
 
+    var myHeaders = new HttpHeaders();
+myHeaders.append("uOIMX1xhRVkZ3vaPfYrzWooG5A65lMDH", "uOIMX1xhRVkZ3vaPfYrzWooG5A65lMDH");
 
-    if(this.formGroup.value['firstname'] != "" || this.formGroup.value['lastname'] !="" || this.formGroup.value['email'] != "" || this.formGroup.value['contact'] !="" || this.formGroup.value['password']!=""){
+ const requestOptions = {
+  method: 'GET',
+  redirect: 'follow',
+  headers: myHeaders
+};
 
-      if(this.formGroup.value['password'] === this.formGroup.value['co_password']){
-        this.isLoading = true
-        this.userService.registerUser(userDetail).subscribe(response=> {
-          this.resStatus = response.status
-          console.log(this.resStatus);
+this._http.get("https://api.apilayer.com/number_verification/countries", requestOptions).subscribe((res)=>{
+  console.log(res);
+}, (err)=>{
+  console.log(err);
+  
+})
+
+  //   if(this.formGroup.value['firstname'] != "" || this.formGroup.value['lastname'] !="" || this.formGroup.value['email'] != "" || this.formGroup.value['contact'] !="" || this.formGroup.value['password']!=""){
+
+  //     if(this.formGroup.value['password'] === this.formGroup.value['co_password']){
+  //       this.isLoading = true
+  //       this.userService.registerUser(userDetail).subscribe(response=> {
+  //         this.resStatus = response.status
+  //         console.log(this.resStatus);
           
-          this.message = response.message
-          this.isLoading = false
-        }, error=> {
-          console.log(error);
-        })
-      }
-      else{
-        this.message = "Password and confirm password entered doesn't match each other. Please check and re-type it."
-      }
-    }
-    else{
-      this.message = "All input must be filled before proceeding"
-    }
+  //         this.message = response.message
+  //         this.isLoading = false
+  //       }, error=> {
+  //         console.log(error);
+  //       })
+  //     }
+  //     else{
+  //       this.message = "Password and confirm password entered doesn't match each other. Please check and re-type it."
+  //     }
+  //   }
+  //   else{
+  //     this.message = "All input must be filled before proceeding"
+  //   }
   }
 
  

@@ -1,6 +1,7 @@
 .cursorPointer{
     cursor: pointer;
 }
+
 .scrollableForm{
     height: 70vh;
     overflow-y: auto;

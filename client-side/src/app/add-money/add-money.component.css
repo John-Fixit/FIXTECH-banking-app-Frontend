@@ -1,0 +1,51 @@
+.content_list_column {
+    height: 70vh;
+    overflow-y: auto;
+}
+
+.content_list_column::-webkit-scrollbar {
+    width: 3px;
+    border-radius: 6vh;
+    overflow: auto;
+    height: 100vh;
+}
+
+.content_list_column::-webkit-scrollbar-thumb {
+    background: rgb(142, 142, 143);
+    border-radius: 10px;
+}
+
+.content_list_column::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px rgb(209, 201, 201);
+    border-radius: 10px;
+}
+
+.bgColor {
+    background-color: navy;
+    color: white;
+}
+
+.content_item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 2vh;
+    align-items: center;
+    cursor: pointer;
+}
+
+.content_item fa-icon {
+    color: navy;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+@media only screen and (max-width: 640px) {
+    .content_item {
+        justify-content: space-between;
+        padding: 0 2vh;
+    }
+}

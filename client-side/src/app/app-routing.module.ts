@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AddMoneyComponent } from './add-money/add-money.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from './login/login.component';
 import { SettingsComponent } from './settings/settings.component';
 import { SignupComponent } from './signup/signup.component';
+import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
 import { TransferComponent } from './transfer/transfer.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 
@@ -15,7 +17,9 @@ const routes: Routes = [
   {path: "login", component: LoginComponent, title: 'Login'},
   {path: 'home', children: [
     {path: '', component: DashboardComponent, title: 'Dashboard'},
-    {path: 'transfer', component: TransferComponent, title: 'Transfer Page'},
+    {path: 'transfer', component: TransferComponent, title: 'Transfer Money'},
+    {path: 'add_money', component: AddMoneyComponent, title: 'Add Money'},
+    {path: 'transaction_history', component: TransactionHistoryComponent, title: 'History'},
     {path: 'profile/:id', component: UserProfileComponent, title: 'Profile'},
     {path: 'setting', component: SettingsComponent, title: 'Setting'},
   ]},

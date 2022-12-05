@@ -1,6 +1,6 @@
 
 import { Component, Input, OnInit } from '@angular/core';
-import { faHome, faGear, faSignOutAlt, faMoneyCheckAlt, faUserAlt } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faGear, faSignOutAlt, faMoneyCheckAlt, faUserAlt, faExchange, faHistory } from '@fortawesome/free-solid-svg-icons';
 import { UsersService } from '../services/users.service';
 import { Router } from '@angular/router';
 @Component({
@@ -23,8 +23,18 @@ export class SidenavComponent implements OnInit {
     },
     {
         route: "/home/transfer",
-        name: "Transaction",
+        name: "Transfer",
+        icon: faExchange
+    },
+    {
+        route: "/home/add_money",
+        name: "Add Money",
         icon: faMoneyCheckAlt
+    },
+    {
+        route: "/home/transaction_history",
+        name: "Transaction History",
+        icon: faHistory
     },
     {
         route: `/home/profile/${this.id}`,

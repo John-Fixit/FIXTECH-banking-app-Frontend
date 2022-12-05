@@ -2,7 +2,7 @@
     overflow: hidden;
 }
 .textColor{
-    color: rgb(3, 3, 49);
+    color: rgb(3, 3, 49) !important;
 }
 
 app-header{

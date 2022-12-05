@@ -4,15 +4,19 @@
         <div class="row p-3">
             <div class="col-4">
                 <p class="text-title text-muted">Current Balance</p>
-                <h4>{{000| currency: 'USD'}}</h4>
+                <h4>
+                    {{userDetail !== undefined?
+                        (userDetail.totalBalance| currency:'USD')
+                        : 000| currency:'USD'}}
+                </h4>
             </div>
             <div class="col-4">
-                <p class="text-title text-muted">Income</p>
-                <h4>{{000| currency: 'USD'}}</h4>
+                <p class="text-title text-muted">Credit</p>
+                <h4>{{credit| currency: 'USD'}}</h4>
             </div>
             <div class="col-4">
-                <p class="text-title text-muted">Outcome</p>
-                <h4>{{000| currency: 'USD'}}</h4>
+                <p class="text-title text-muted">Debit</p>
+                <h4>{{debit| currency: 'USD'}}</h4>
             </div>
         </div>
         <div class="mx-auto">
@@ -20,3 +24,4 @@
         </div>
     </div>
 </div>
+

@@ -20,6 +20,9 @@ import { StatisticsComponent } from './pages/statistics/statistics.component';
 import { LandingComponent } from './landing/landing.component';
 import { LandingNavComponent } from './pages/landing-nav/landing-nav.component';
 import { CheckUserPipe } from './pipes/check-user.pipe';
+import { AddMoneyComponent } from './add-money/add-money.component';
+import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
+import { Angular4PaystackModule } from 'angular4-paystack';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +39,9 @@ import { CheckUserPipe } from './pipes/check-user.pipe';
     StatisticsComponent,
     LandingComponent,
     LandingNavComponent,
-    CheckUserPipe
+    CheckUserPipe,
+    AddMoneyComponent,
+    TransactionHistoryComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +51,7 @@ import { CheckUserPipe } from './pipes/check-user.pipe';
     BrowserAnimationsModule,
     HttpClientModule,
     FontAwesomeModule,
+    Angular4PaystackModule
   ],
   providers: [],
   bootstrap: [AppComponent]

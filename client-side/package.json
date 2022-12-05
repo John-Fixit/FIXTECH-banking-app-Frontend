@@ -23,7 +23,10 @@
     "@fortawesome/angular-fontawesome": "^0.11.1",
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@paystack/inline-js": "^2.12.6",
     "@syncfusion/ej2-ng-charts": "^16.2.50",
+    "angular-paystack": "^1.0.0",
+    "angular4-paystack": "^3.0.2",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
