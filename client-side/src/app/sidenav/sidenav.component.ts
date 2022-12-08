@@ -14,11 +14,68 @@ export class SidenavComponent implements OnInit {
   logout = faSignOutAlt 
   @Input() sideNavStatus:boolean = false;
 
-  public id: any = JSON.parse(localStorage['userDetail'])['_id'];
+  // public id: any = JSON.parse(localStorage['userDetail'])['_id'];
+  public id: any = '00000000';
 
+//   public navData:any = [
+//     {
+//         route: "/home/",
+//         name: "Dashboard",
+//         icon: faHome
+//     },
+//     {
+//         route: "/home/transfer",
+//         name: "Transfer",
+//         icon: faExchange
+//     },
+//     {
+//         route: "/home/add_money",
+//         name: "Add Money",
+//         icon: faMoneyCheckAlt
+//     },
+//     {
+//         route: "/home/transaction_history",
+//         name: "Transaction History",
+//         icon: faHistory
+//     },
+//     {
+//         route: `/home/profile/${this.id}`,
+//         name: "Profile",
+//         icon: faUserAlt
+//     },
+//     {
+//         route: "/home/setting",
+//         name: "Setting",
+//         icon: faGear
+//     },
+// ]
+  constructor(
+    public userService : UsersService,
+    public router: Router
+  ) { }
+
+  ngOnInit(): void {
+    this.userService.authorizeUser().subscribe((res)=>{
+      console.log(res);
+      this.id =  res.userDetail._id
+    })
+  }
+
+  logOut(){
+      if(confirm('are you sure to log out')){
+        localStorage.removeItem('userToken')
+        this.router.navigate(['/login']);
+      }
+  }
+  // getId(){
+  //   this.userService.authorizeUser().subscribe((res)=>{
+  //     console.log(res.userDetail);
+  //     return res.userDetail._id
+  //   })
+  // }
   public navData:any = [
     {
-        route: "/home/",
+        route: "/home/dashboard",
         name: "Dashboard",
         icon: faHome
     },
@@ -34,7 +91,7 @@ export class SidenavComponent implements OnInit {
     },
     {
         route: "/home/transaction_history",
-        name: "Transaction History",
+        name: "History",
         icon: faHistory
     },
     {
@@ -49,24 +106,5 @@ export class SidenavComponent implements OnInit {
     },
 
 ]
-  constructor(
-    public userService : UsersService,
-    public router: Router
-  ) { }
 
-  ngOnInit(): void {
-    console.log(this.getId())
-  }
-
-  logOut(){
-      if(confirm('are you sure to log out')){
-        localStorage.removeItem('userToken')
-        this.router.navigate(['/login']);
-      }
-  }
-  getId(){
-    this.userService.authorizeUser().subscribe((res)=>{
-      return res.userDetail._id
-    })
-  }
 }

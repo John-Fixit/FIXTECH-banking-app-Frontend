@@ -19,7 +19,6 @@ export class UserProfileComponent implements OnInit {
     {name: "Contact", value:  "Contact" },
     {name: "Address", value:  "Address" },
     {name: "Date of Birth", value: "Date of Birth" },
-
   ]
 
     sideNavStatus : boolean = false

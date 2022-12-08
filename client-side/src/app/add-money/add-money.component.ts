@@ -71,7 +71,7 @@ export class AddMoneyComponent implements OnInit {
       alert('You want to close the payment gate')
     }
     paymentDone(params:any){
-      let transactionDetail = {type: 'credit', owner: `${this.userDetail.firstname} ${this.userDetail.lastname}`, recipientAccountNumber: this.userDetail.accountNumber, timeStamp: new Date(), transactionName: 'fund account', amount: parseInt(this.amountToFund)};
+      let transactionDetail = {type: 'credit', recipient: `${this.userDetail.firstname} ${this.userDetail.lastname}`, recipientAccountNumber: this.userDetail.accountNumber, timeStamp: new Date(), method: 'fund account', amount: parseInt(this.amountToFund)};
       
     let transferDetail = {userId: this.userDetail._id, amount: this.amountToFund, transactionDetail}
 

@@ -16,7 +16,7 @@ const routes: Routes = [
   {path: "register", component: SignupComponent, title: 'Register'},
   {path: "login", component: LoginComponent, title: 'Login'},
   {path: 'home', children: [
-    {path: '', component: DashboardComponent, title: 'Dashboard'},
+    {path: 'dashboard', component: DashboardComponent, title: 'Dashboard'},
     {path: 'transfer', component: TransferComponent, title: 'Transfer Money'},
     {path: 'add_money', component: AddMoneyComponent, title: 'Add Money'},
     {path: 'transaction_history', component: TransactionHistoryComponent, title: 'History'},

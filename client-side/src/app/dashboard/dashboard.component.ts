@@ -27,11 +27,11 @@ export class DashboardComponent implements OnInit {
     this.userService.authorizeUser().subscribe((res)=>{
         if(res.status){
           localStorage.setItem('userDetail', JSON.stringify(res.userDetail))
+          
           this.userDetail = res.userDetail;  
-          this.userService.userDetail.next(res.userDetail)
-          Object.keys(this.userDetail).length == 0
+          // this.userService.userDetail.next(res.userDetail)
           this.lastTransaction = this.userDetail.transactionType[this.userDetail.transactionType.length-1]
-        
+
             this.emptyObj = Object.keys(this.lastTransaction).length === 0? true: false
             localStorage.setItem('userId', JSON.stringify(res.userDetail._id))
         }

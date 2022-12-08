@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
 
   public baseUrl = environment.url
   public message: any = ""
+  public isLoading:boolean = false;
   constructor(
       public userService: UsersService,
       public route : Router,
@@ -37,6 +38,7 @@ export class LoginComponent implements OnInit {
         this.message = "All input must be filled before proceeding!!!"
       }
       else{
+      this.isLoading = true
       this.http.post<any>(`${this.baseUrl}/authLogin`, {accountNumber, password}).subscribe((res)=>{   
         if(res.status){
           localStorage.setItem('userToken', JSON.stringify(res.token))
@@ -45,6 +47,7 @@ export class LoginComponent implements OnInit {
         else{
             this.message = res.message
         }
+        this.isLoading = false
       }, error=>{
         console.log(error);
       })

@@ -40,7 +40,17 @@
             <div class="col-12 px-2">
                 <p>Don't have an account? <a routerLink="/register" class="text-decoration-none text-primary">Sign up.</a></p>
             </div>
-            <button class="btn btn-primary mx-auto rounded-pill w-100" type="submit">Login to your account</button>
+                <button class="btn btn-primary mx-auto rounded-pill w-100" type="submit" *ngIf="!isLoading">Login to your account</button>
+                <button class="btn btn-primary border border-white border-3 align-items-center rounded-pill" type="submit" *ngIf="isLoading">
+                    <div class="wrapper">
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="loaderShadow"></div>
+                        <div class="loaderShadow"></div>
+                        <div class="loaderShadow"></div>
+                    </div>
+                </button>
         </form>
     </div>
 </div>

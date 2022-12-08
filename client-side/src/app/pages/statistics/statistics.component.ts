@@ -26,7 +26,6 @@ export class StatisticsComponent implements OnInit {
           if(item.type == 'credit'){
             this.credit += parseInt(item.amount)
           }
-          console.log({credit: this.credit, debit: this.debit});
       })
 
     })
