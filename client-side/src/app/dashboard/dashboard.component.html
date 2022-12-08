@@ -35,11 +35,9 @@
                             <div class="text-center">
                                 <p class="fw-bold textColor">Last Transaction</p>
                                 <div class="row">
-                                    <div class="col-12 border-end">
-                                        <p class="textColor">{{lastTransaction.type| titlecase}}</p>
-                                        <h4> {{ userDetail !== undefined ? (userDetail.transactionType.length? 
-                                            (lastTransaction.amount | currency:'USD') : 000|
-                                            currency: 'USD') : 000| currency: 'USD'}}</h4>
+                                    <div class="col-12 border-end" >
+                                        <p class="textColor">{{!emptyObj ? (lastTransaction.type| titlecase) : "No transaction"}}</p>
+                                        <h4> {{ !emptyObj? (lastTransaction.amount | currency:'USD'):  000| currency: 'USD'}}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -58,19 +56,7 @@
                         </div>
                     </div>
                 </div>
-                <button (click)="addInfoToast()">
 
-                </button>
-                <div class="">
-                   <lib-toastify-toast-container
-                    [position]="'top-left'"
-                    [transition]="'slide'"
-                    [autoClose]="8000"
-                    [iconLibrary]="'material'"
-                    >
-
-                    </lib-toastify-toast-container>
-                </div>
                 <app-statistics></app-statistics>
             </div>
         </div>

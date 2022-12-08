@@ -45,7 +45,7 @@ export class SignupComponent implements OnInit {
       firstname: this.formGroup.value['firstname'], 
       lastname: this.formGroup.value['lastname'], 
       email: this.formGroup.value['email'], 
-      contact: this.formGroup.value['contact'], 
+      phoneNumber: this.formGroup.value['contact'], 
       password: this.formGroup.value['password'], 
       accountNumber: accountNumber, 
       totalBalance: 1000,
@@ -53,43 +53,27 @@ export class SignupComponent implements OnInit {
       profile_picture: ""
     }
 
-    var myHeaders = new HttpHeaders();
-myHeaders.append("uOIMX1xhRVkZ3vaPfYrzWooG5A65lMDH", "uOIMX1xhRVkZ3vaPfYrzWooG5A65lMDH");
+    if(this.formGroup.value['firstname'] == "" || this.formGroup.value['lastname'] =="" || this.formGroup.value['email'] == "" || this.formGroup.value['contact'] =="" || this.formGroup.value['password']==""){
+      this.message = "All input must be filled before proceeding"
 
- const requestOptions = {
-  method: 'GET',
-  redirect: 'follow',
-  headers: myHeaders
-};
-
-this._http.get("https://api.apilayer.com/number_verification/countries", requestOptions).subscribe((res)=>{
-  console.log(res);
-}, (err)=>{
-  console.log(err);
-  
-})
-
-  //   if(this.formGroup.value['firstname'] != "" || this.formGroup.value['lastname'] !="" || this.formGroup.value['email'] != "" || this.formGroup.value['contact'] !="" || this.formGroup.value['password']!=""){
-
-  //     if(this.formGroup.value['password'] === this.formGroup.value['co_password']){
-  //       this.isLoading = true
-  //       this.userService.registerUser(userDetail).subscribe(response=> {
-  //         this.resStatus = response.status
-  //         console.log(this.resStatus);
-          
-  //         this.message = response.message
-  //         this.isLoading = false
-  //       }, error=> {
-  //         console.log(error);
-  //       })
-  //     }
-  //     else{
-  //       this.message = "Password and confirm password entered doesn't match each other. Please check and re-type it."
-  //     }
-  //   }
-  //   else{
-  //     this.message = "All input must be filled before proceeding"
-  //   }
+    }
+    else{
+      if(this.formGroup.value['password'] == this.formGroup.value['co_password']){
+        this.isLoading = true
+        this.userService.registerUser(userDetail).subscribe(response=> {
+          this.resStatus = response.status                                                                                            
+          this.message = response.message
+          this.isLoading = false
+        }, error=> {
+          console.log(error);
+        })
+      }
+      else{
+        
+        this.message = "Password and confirm password entered doesn't match each other. Please check and re-type it."
+        
+      }
+    }
   }
 
  

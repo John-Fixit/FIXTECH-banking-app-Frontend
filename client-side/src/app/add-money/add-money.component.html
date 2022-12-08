@@ -5,7 +5,7 @@
     <div class="display-area p-3" [ngClass]="{'display-area-shrink': sideNavStatus}">
         <div class="">
             <h1 class="ps-2 text-danger fw-bold">Add <span class="textColor">Money</span></h1>
-            <div *ngIf="responseErr != undefined">
+            <div *ngIf="responseErr != undefined" class="text-center">
                 <span class="alert alert-success p-1" *ngIf="responseErr == false">{{response}}</span>
                 <span class="alert alert-danger p-1" *ngIf="responseErr == true">{{response}}</span>
             </div>
@@ -26,15 +26,15 @@
                     </div>
                 </div>
             </div>
-
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Add Money to my Account</h5>
+                            <h3 class="modal-title" id="staticBackdropLabel">Add Money to You Account</h3>
                         </div>
                         <div class="modal-body">
+                            <!-- bank transfer process -->
                             <div class="bank-transfer" *ngIf="addMoneyType == 'Bank Transfer'">
                                 <b class="card-title">Bank Transfer</b>
                                 <div class="content">
@@ -60,9 +60,11 @@
                                                     }}
                                                     </b>
                                                 </div>
-                                                <div class="col text-end me-auto ">
-                                                    <fa-icon [icon]="copyIcon"></fa-icon>
 
+                                                <div class="col text-end me-auto " #container>
+                                                    <button class="border-0" ngxClipboard [cbContent]="userDetail&&userDetail.accountNumber" (cbOnSuccess)="copied($event)" [container]="container">
+                                                        <fa-icon [icon]="copyIcon" [ngClass]="{'text-success': copiedStatus}"></fa-icon>
+                                                    </button>
                                                 </div>
                                         </div>
                                         <div class="shadow-lg my-2 p-2 d-flex">
@@ -79,22 +81,20 @@
                                     </div>
                                 </div>
                             </div>
-
-                            
+                            <!-- top-up with bank card process-->
+                            <div class="cash-fund" *ngIf="addMoneyType == 'Top-up with card/Account'">
+                                <label for="" class="fw-bold">Amount</label>
+                                <input type="number" class="form-control" placeholder="N100.00-9,999.00"  (keyup)="handleAmt($event)">
+                                <div class="alert alert-warning my-2">
+                                    <b>Note:</b><span> For amount within $ 50.00 - 9,999.00</span>
+                                </div>
+                            </div>
+                            <!-- cash deposit process-->
                             <div class="cash-fund" *ngIf="addMoneyType == 'Cash Deposit'">
                                 <label for="" class="fw-bold">Amount</label>
                                 <input type="text" class="form-control" placeholder="Enter amount to fund">
                                 <div class="alert alert-warning my-2">
                                     <b>Note:</b><span> By proceeding your account wiill be top up imidiately</span>
-                                </div>
-                            </div>
-
-
-                            <div class="cash-fund" *ngIf="addMoneyType == 'Top-up with card/Account'">
-                                <label for="" class="fw-bold">Amount</label>
-                                <input type="number" class="form-control" placeholder="N100.00-9,999.00" [(ngModel)]="amountToFund">
-                                <div class="alert alert-warning my-2">
-                                    <b>Note:</b><span> For amount within $ 100.00 - 9,999.00</span>
                                 </div>
                             </div>
 
@@ -104,6 +104,7 @@
                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal" *ngIf="addMoneyType != 'Top-up with card/Account'">Done</button>
 
                             <button *ngIf="addMoneyType == 'Top-up with card/Account'" class="btn btn-success"
+                            [ngClass]="{'disabled': amtIsEmpty}"
                             angular4-paystack
                             [key]="'pk_test_8e0adf1d74b3595f09d84c9b4ec645477eeb20fd'"
                             [email]='userDetail !== undefined? (userDetail.email): "mailempty@gmail.com"'
@@ -119,10 +120,9 @@
                         <lib-toastify-toast-container
                         [position]="'top-left'"
                         [transition]="'slide'"
-                        [autoClose]="8000"
+                        [autoClose]="5000"
                         [iconLibrary]="'material'"
                         >
-
                         </lib-toastify-toast-container>
                     </div>
                 </div>

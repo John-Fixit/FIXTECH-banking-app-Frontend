@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
 })
 export class LoginComponent implements OnInit {
 
-  public loginUrl = environment.url
+  public baseUrl = environment.url
   public message: any = ""
   constructor(
       public userService: UsersService,
@@ -37,17 +37,16 @@ export class LoginComponent implements OnInit {
         this.message = "All input must be filled before proceeding!!!"
       }
       else{
-      this.http.post<any>(`${this.loginUrl}/authLogin`, {accountNumber, password}).subscribe(res=>{
+      this.http.post<any>(`${this.baseUrl}/authLogin`, {accountNumber, password}).subscribe((res)=>{   
         if(res.status){
           localStorage.setItem('userToken', JSON.stringify(res.token))
-              this.route.navigate(['/home/'])
+          this.route.navigate(['/home/'])
         }
         else{
             this.message = res.message
         }
       }, error=>{
         console.log(error);
-        
       })
     }
   }

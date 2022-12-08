@@ -15,6 +15,7 @@ export class SidenavComponent implements OnInit {
   @Input() sideNavStatus:boolean = false;
 
   public id: any = JSON.parse(localStorage['userDetail'])['_id'];
+
   public navData:any = [
     {
         route: "/home/",
@@ -54,7 +55,7 @@ export class SidenavComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
+    console.log(this.getId())
   }
 
   logOut(){
@@ -63,7 +64,9 @@ export class SidenavComponent implements OnInit {
         this.router.navigate(['/login']);
       }
   }
-
-  
-
+  getId(){
+    this.userService.authorizeUser().subscribe((res)=>{
+      return res.userDetail._id
+    })
+  }
 }

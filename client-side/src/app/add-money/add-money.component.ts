@@ -19,11 +19,13 @@ export class AddMoneyComponent implements OnInit {
   reference = ""
   public response = ""
   public responseErr:any = undefined
+  public copiedStatus:any = false
 
   public addMoneyType:any = ""
   public userDetail:any = undefined;
   private baseUrl:any = environment.url
   public amountToFund:any = parseInt("")
+  public amtIsEmpty:boolean = true
   public thisData= [
      {
          icon: faMoneyBillTransfer,
@@ -31,14 +33,14 @@ export class AddMoneyComponent implements OnInit {
          light_text: "Add money via mobile or internet banking"
      },
      {
-         icon: faMoneyCheck,
-         bold_text: "Cash Deposit",
-         light_text: "Fund your account with ease"
-     },
-     {
          icon: faIdCardAlt,
          bold_text: "Top-up with card/Account",
          light_text: "Add money directly from your bank card"
+     },
+     {
+         icon: faMoneyCheck,
+         bold_text: "Cash Deposit",
+         light_text: "Fund your account with ease"
      },
      {
          icon: faMoneyCheckAlt,
@@ -46,8 +48,6 @@ export class AddMoneyComponent implements OnInit {
          light_text: "You can change your mobile number"
      },
   ]
-
-
 
   constructor(
     private _userService: UsersService,
@@ -93,5 +93,26 @@ export class AddMoneyComponent implements OnInit {
   addInfoToast(){
  this._toastService.success(this.response)
   }
+
+  copied(params:any){
+    this.copiedStatus =  params.isSuccess?  true:  false
+    params.isSuccess?  this._toastService.success('Copied'):  this._toastService.error('Not copied')
+  }
+
+  handleAmt(event:any){
+    this.amountToFund = event.target.value
+    if(event.target.value == ""){
+      this.amtIsEmpty = true
+  }
+  else{
+    if(event.target.value < 50){
+      this.amtIsEmpty = true
+    }
+    else{
+      this.amtIsEmpty = false
+    }
+  }
+  }
+
 }
 

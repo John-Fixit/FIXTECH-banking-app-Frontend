@@ -2,13 +2,14 @@ import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService implements OnInit{
   public url = environment.url
   public userToken:any = ""
-
+  public userDetail:BehaviorSubject<any> = new BehaviorSubject({})
   constructor(
     private http : HttpClient,
     public router : Router
