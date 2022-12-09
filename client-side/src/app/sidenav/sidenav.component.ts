@@ -59,6 +59,10 @@ export class SidenavComponent implements OnInit {
       console.log(res);
       this.id =  res.userDetail._id
     })
+    if(localStorage['userDetail']){
+      this.id = JSON.parse(localStorage['userDetail'])._id
+    }
+
   }
 
   logOut(){
@@ -95,7 +99,7 @@ export class SidenavComponent implements OnInit {
         icon: faHistory
     },
     {
-        route: `/home/profile/${this.id}`,
+        route: `/home/profile/${localStorage['userDetail']?(JSON.parse(localStorage['userDetail'])._id):"not found"}`,
         name: "Profile",
         icon: faUserAlt
     },

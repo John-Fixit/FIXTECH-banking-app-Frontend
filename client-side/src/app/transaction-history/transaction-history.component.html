@@ -11,7 +11,7 @@
                         <h2 class="text-color">Credit</h2>
                         <ng-container *ngIf="creditTransaction.length; then isNotEmpty; else isEmpty"></ng-container>
                         <ng-template #isNotEmpty>
-                            <table class="table table-striped table-bordered table-hover table-responsive-sm scrollableTable">
+                            <table class="table table-striped table-bordered table-hover table-responsive-sm">
                                 <tr>
                                     <th>Amount($)</th>
                                     <th>From (Account Number)</th>
@@ -31,12 +31,10 @@
                         </ng-template>
                     </div>
                 </div>
-                <div class="col-sm-6 border my-3 p-2 scrollableTable">
+                <div class="col-sm-6 border my-3 p-2">
                     <div class="shadow p-2">
                         <h2 class="text-color">Debit</h2>
-                        <ng-container *ngIf="debitTransaction.length; then isNotEmpty; else isEmpty"></ng-container>
-                        <ng-template #isNotEmpty>
-                            <table class="table table-striped table-bordered table-hover table-responsive-sm scrollableTable">
+                            <table class="table table-striped table-bordered table-hover table-responsive-sm" *ngIf="debitTransaction.length">
                                 <tr>
                                     <th>Amount($)</th>
                                     <th>To(Account Number)</th>
@@ -44,16 +42,15 @@
                                     <th>Date</th>
                                 </tr>
                                 <tr *ngFor="let item of debitTransaction">
-                                    <td>{{item.amount}}</td>
+                                    <td><span>{{item.amount}}</span></td>
                                     <td>{{item.recipientAccountNumber}}</td>
-                                    <td>{{item.method}}</td>
+                                    <td>{{item.transactionMethod}}</td>
                                     <td>{{item.timeStamp| date}}</td>
                                 </tr>
                             </table>
-                        </ng-template>
-                        <ng-template #isEmpty>
-                            <h2 class="text-danger">No Debit Hostory</h2>
-                        </ng-template>
+                        
+                            <h2 class="text-danger" *ngIf="!debitTransaction.length">No Debit Hostory</h2>
+                     
                     </div>
                 </div>
             </div>

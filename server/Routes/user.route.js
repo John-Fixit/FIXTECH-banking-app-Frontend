@@ -13,4 +13,6 @@ userRouter.get('/getUserDetail/:id', userController.getUserDetail)
 userRouter.get('/users', userController.getAllUsers)
 userRouter.post('/transfer', userController.transferFunc)
 userRouter.post('/topUpWithCard', userController.topUpWithCard)
+userRouter.get('/checkUser/:id', userController.checkUser)
+
 module.exports = userRouter

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { faUser as userIcon, faSearch as searchIcon } from '@fortawesome/free-solid-svg-icons';
+import { environment } from 'src/environments/environment';
 import { TransactionService } from '../services/transaction.service';
 import { UsersService } from '../services/users.service';
 @Component({
@@ -18,7 +19,7 @@ export class TransferComponent implements OnInit {
   public amtToTransfer: string = ""
   public hide_show_amt: boolean = false
   public message: any = ""
-
+  private baseUrl = environment.url
   public showHideAmtError = false
   public errStatus: any = undefined;
   public amtErrStatus: any = undefined
@@ -55,21 +56,23 @@ export class TransferComponent implements OnInit {
 
   beneficiary_continue(){
     if(this.beneficiary_accNumber !=""){
-      let bUser = this.allUsers.find((user: any)=>user.accountNumber == this.beneficiary_accNumber)
-      if(bUser){
-        if(bUser.accountNumber == this.thisUser.accountNumber){
-          this.errStatus = true
-          this.message = "Ooh sorry! you cannot transfer to your own account!"
+      this._http.get(`${this.baseUrl}/checkUser/${this.beneficiary_accNumber}`).subscribe((res:any)=>{
+          console.log(res);
+        if(res.status){
+          if(res.user.accountNumber == this.thisUser.accountNumber){
+              this.errStatus = true
+              this.message = "Ooh sorry! you cannot transfer to your own account!"
+          }
+          else{
+            this.errStatus = false
+            this.recipientDetail = res.user
+          }
         }
         else{
-          this.errStatus = false
-          this.recipientDetail = bUser
+          this.errStatus = true
+          this.message = res.message
         }
-      }
-      else{
-        this.errStatus = true
-        this.message = "account number entered is not correct please check and try again!"
-      }
+      })
     }
     else{
         this.errStatus = true
@@ -105,9 +108,9 @@ export class TransferComponent implements OnInit {
         this.confirmTransferMessage = "Your account balance is insufficient to complete the transaction!"
       }
       else{
-          let senderTransactionDetail = {type: 'debit', recipient: `${this.recipientDetail.firstname} ${this.recipientDetail.lastname}`, recipientAccountNumber: this.recipientDetail.accountNumber, timeStamp: new Date(), method: 'transfer', amount: parseInt(this.amtToTransfer)};
+          let senderTransactionDetail = {type: 'debit', recipient: `${this.recipientDetail.firstname} ${this.recipientDetail.lastname}`, recipientAccountNumber: this.recipientDetail.accountNumber, timeStamp: new Date(), transactionMethod: 'transfer', amount: parseInt(this.amtToTransfer)};
           
-          let recipientTransactionDetail = {type: 'credit', sender: `${this.thisUser.firstname} ${this.thisUser.lastname}`, senderAccountNumber: this.thisUser.accountNumber, timeStamp: new Date(), method: 'recieved', amount: parseInt(this.amtToTransfer)};
+          let recipientTransactionDetail = {type: 'credit', sender: `${this.thisUser.firstname} ${this.thisUser.lastname}`, senderAccountNumber: this.thisUser.accountNumber, timeStamp: new Date(), transactionMethod: 'recieved', amount: parseInt(this.amtToTransfer)};
 
           let transferDetail = {senderId: this.thisUser._id, recipientId: this.recipientDetail._id, amount: this.amtToTransfer, senderTransactionDetail, recipientTransactionDetail}
 

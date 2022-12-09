@@ -7,7 +7,7 @@
     width: 3px;
     border-radius: 6vh;
     overflow: auto;
-    height: 100vh;
+    max-height: 100vh;
 }
 
 .content_list_column::-webkit-scrollbar-thumb {

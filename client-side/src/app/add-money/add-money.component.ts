@@ -23,7 +23,7 @@ export class AddMoneyComponent implements OnInit {
 
   public addMoneyType:any = ""
   public userDetail:any = undefined;
-  private baseUrl:any = environment.url
+
   public amountToFund:any = parseInt("")
   public amtIsEmpty:boolean = true
   public thisData= [
@@ -37,16 +37,16 @@ export class AddMoneyComponent implements OnInit {
          bold_text: "Top-up with card/Account",
          light_text: "Add money directly from your bank card"
      },
-     {
-         icon: faMoneyCheck,
-         bold_text: "Cash Deposit",
-         light_text: "Fund your account with ease"
-     },
-     {
-         icon: faMoneyCheckAlt,
-         bold_text: "Request Money from Others",
-         light_text: "You can change your mobile number"
-     },
+    //  {
+    //      icon: faMoneyCheck,
+    //      bold_text: "Cash Deposit",
+    //      light_text: "Fund your account with ease"
+    //  },
+    //  {
+    //      icon: faMoneyCheckAlt,
+    //      bold_text: "Request Money from Others",
+    //      light_text: "You can change your mobile number"
+    //  },
   ]
 
   constructor(
@@ -71,7 +71,7 @@ export class AddMoneyComponent implements OnInit {
       alert('You want to close the payment gate')
     }
     paymentDone(params:any){
-      let transactionDetail = {type: 'credit', recipient: `${this.userDetail.firstname} ${this.userDetail.lastname}`, recipientAccountNumber: this.userDetail.accountNumber, timeStamp: new Date(), method: 'fund account', amount: parseInt(this.amountToFund)};
+      let transactionDetail = {type: 'credit', recipient: `${this.userDetail.firstname} ${this.userDetail.lastname}`, recipientAccountNumber: this.userDetail.accountNumber, timeStamp: new Date(), transactionMethod: 'fund account', amount: parseInt(this.amountToFund)};
       
     let transferDetail = {userId: this.userDetail._id, amount: this.amountToFund, transactionDetail}
 
@@ -79,7 +79,6 @@ export class AddMoneyComponent implements OnInit {
       this._transactionService.fundAccount(transferDetail).subscribe((res:any)=>{
         this.response = res.message
         if(res.status){
-            console.log(res.message);
             this.addInfoToast()
             this.responseErr = false
           }

@@ -64,6 +64,12 @@ export class SignupComponent implements OnInit {
           this.resStatus = response.status                                                                                            
           this.message = response.message
           this.isLoading = false
+          this.formGroup.value['firstname'] = ""
+          this.formGroup.value['lastname'] = ""
+          this.formGroup.value['email'] = ""
+          this.formGroup.value['contact'] = ""
+          this.formGroup.value['password'] = ""
+          this.formGroup.value['co_password'] = ""
         }, error=> {
           console.log(error);
         })

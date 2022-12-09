@@ -282,11 +282,10 @@ const topUpWithCard=(req, res)=>{
   const reqBody = req.body
   userModel.findById({'_id': reqBody.userId}, (err, user) => {
     if(err){
-      console.log(err);
       res.json({message: 'Error occurred please check your internet connection!', status: false})
     }
     else{
-        user.totalBalance +=reqBody.amount
+        user.totalBalance += parseInt(reqBody.amount)
         user.transactionType.push(reqBody.transactionDetail)
         userModel.findOneAndUpdate({'_id': reqBody.userId}, {$set: {'totalBalance': user.totalBalance, 'transactionType': user.transactionType}}, (err, result)=>{
           if(err) {
@@ -299,6 +298,22 @@ const topUpWithCard=(req, res)=>{
     }
   })
 }
+const checkUser=(req, res)=>{
+    const accountNumber = req.params.id
+    userModel.findOne({'accountNumber': accountNumber}, (err, result)=>{
+        if(err){
+          res.json({message: 'Internal server error, please check your connection', status: false})
+        }
+        else{
+          if(result){
+              res.json({user: result, status: true})
+          }
+          else{
+            res.json({message: 'The account Number entered is not correct', status: false})
+          }
+        }
+    })
+}
 module.exports = {
   getRes, 
   signup,
@@ -308,5 +323,6 @@ module.exports = {
   getUserDetail,
   getAllUsers,
   transferFunc,
-  topUpWithCard
+  topUpWithCard,
+  checkUser
 };

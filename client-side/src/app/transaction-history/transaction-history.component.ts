@@ -16,16 +16,9 @@ export class TransactionHistoryComponent implements OnInit {
 
   ngOnInit(): void {
       this._userService.authorizeUser().subscribe((res:any)=>{
-          res.userDetail.transactionType.filter((item:any)=>{
-              if(item.type == "credit"){
-                  this.creditTransaction += item
-                  console.log(this.creditTransaction);
-              }
-              if(item.type == "debit"){
-                this.debitTransaction += item
-                console.log(this.debitTransaction);
-              }
-          })
+          this.creditTransaction = res.userDetail.transactionType.filter((item:any)=>item.type == "credit")
+          this.debitTransaction = res.userDetail.transactionType.filter((item:any)=>item.type == "debit")
+          console.log(this.debitTransaction);
       })
 
 
