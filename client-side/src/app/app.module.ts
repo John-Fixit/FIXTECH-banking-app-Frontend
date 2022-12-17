@@ -26,7 +26,7 @@ import { Angular4PaystackModule } from 'angular4-paystack';
 import { AngularToastifyModule, ToastService } from 'angular-toastify';
 import { ClipboardModule } from 'ngx-clipboard';
 import { BasicLineEchartComponent } from './echarts/line/basic-line-echart/basic-line-echart.component';
-import NgxEchartsModule from 'ngx-echarts'
+// import {NgxEchartsModule} from 'ngx-echarts'
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,7 +59,7 @@ import NgxEchartsModule from 'ngx-echarts'
     AngularToastifyModule,
     Angular4PaystackModule.forRoot('pk_test_8e0adf1d74b3595f09d84c9b4ec645477eeb20fd'),
     ClipboardModule,
-    NgxEchartsModule
+    // NgxEchartsModule
   ],
   providers: [ToastService],
   bootstrap: [AppComponent]
