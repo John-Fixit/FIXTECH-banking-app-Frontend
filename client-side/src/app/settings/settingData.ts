@@ -17,12 +17,12 @@ export const settingData = [
     },
     {
         icon: faUserAlt,
-        bold_text: "Address",
+        bold_text: "Change Address",
         light_text: "Change your Address conveniently"
     },
-    {
-        icon: faLock,
-        bold_text: "Change Password",
-        light_text: "You can change your password easily "
-    },
+    // {
+    //     icon: faLock,
+    //     bold_text: "Change Password",
+    //     light_text: "You can change your password easily "
+    // },
 ]

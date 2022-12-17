@@ -57,7 +57,6 @@ export class TransferComponent implements OnInit {
   beneficiary_continue(){
     if(this.beneficiary_accNumber !=""){
       this._http.get(`${this.baseUrl}/checkUser/${this.beneficiary_accNumber}`).subscribe((res:any)=>{
-          console.log(res);
         if(res.status){
           if(res.user.accountNumber == this.thisUser.accountNumber){
               this.errStatus = true

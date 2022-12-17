@@ -12,7 +12,6 @@ const accountSid = process.env.ACCOUNT_SID;
 const authToken = process.env.AUTH_TOKEN;
 const client = require("twilio")(accountSid, authToken);
 
-
 const SECRET = process.env.JWT_SECRET;
 const EMAIL = process.env.EMAIL;
 const PASSWORD = process.env.PASSWORD;
@@ -58,7 +57,6 @@ const signup = (req, res) => {
               status: false,
             });
           } else {
-
             // client.messages
             // .create({ body: `Your FICOM account Number is ${req.body.accountNumber}`, from: process.env.PHONE_NUMBER, to: "+2349160261836" })
             // .then((message) => console.log(message.body));
@@ -82,7 +80,7 @@ const signup = (req, res) => {
                 });
               } else {
                 res.json({
-                  message: `User registered successfully, navigate to your gmail account for your account number!`,
+                  message: `User registered successfully, your account Number has been sent to ${req.body.email}`,
                   status: true,
                 });
               }
@@ -105,7 +103,7 @@ const signin = (req, res) => {
     } else {
       if (!user) {
         res.json({
-          message: `The account number was incorrect!`,
+          message: `The account number entered is incorrect!`,
           status: false,
         });
       } else {
@@ -121,10 +119,10 @@ const signin = (req, res) => {
                 { accountNumber: req.body.accountNumber },
                 SECRET
               );
-              res.json({ token, status: true });
+              res.json({ token, status: true, user });
             } else {
               res.json({
-                message: `Incorrect password, please check your password and try again`,
+                message: `Incorrect password, please check your password and try again`, status: false
               });
             }
           }
@@ -166,7 +164,6 @@ const authorizeFunc = (req, res) => {
   const token = req.headers.authorization.split(" ")[1];
   jwt.verify(token, SECRET, (err, result) => {
     if (err) {
-      console.log(err);
       res.json({
         message: `Internal server error! please check your connection`,
         status: false,
@@ -187,17 +184,16 @@ const authorizeFunc = (req, res) => {
 };
 const uploadUserPicture = (req, res) => {
   const userDet = req.body;
-  cloudinary.v2.uploader.upload(userDet.fileUrl, function (err, result) {
-    const pictureUrl = result.secure_url;
+  cloudinary.v2.uploader.upload(userDet.fileUrl, function (err, uploadResult) {
     if (err) {
       res.json({
-        message: `Internal service error! profile photo not saved, please try again!`,
+        message: `Connection error! profile photo not saved, please try again!`,
         status: false,
       });
     } else {
       userModel.findOneAndUpdate(
         { _id: userDet.id },
-        { profile_picture: result.secure_url },
+        { profile_picture: uploadResult.secure_url },
         (err, result) => {
           console.log(result);
           if (err) {
@@ -209,8 +205,8 @@ const uploadUserPicture = (req, res) => {
             res.json({
               message: `Profile picture uploaded successfully`,
               status: true,
-              pictureUrl,
-            }); 
+              pictureUrl: uploadResult.secure_url,
+            });
           }
         }
       );
@@ -218,104 +214,231 @@ const uploadUserPicture = (req, res) => {
   });
 };
 const getUserDetail = (req, res) => {
-  const id = req.params.id
-  userModel.findById({_id: id}, (err, user)=>{
-    if(err){
-      res.json({message: "Internal server error, please check your connection!", status: false})
+  const id = req.params.id;
+  userModel.findById({ _id: id }, (err, user) => {
+    if (err) {
+      res.json({
+        message: "Internal server error, please check your connection!",
+        status: false,
+      });
+    } else {
+      res.json({ userDetail: user, status: true });
     }
-    else{
-      res.json({userDetail: user, status: true})
-    }
-  })
+  });
 };
-const getAllUsers=(req, res)=>{
-    userModel.find((err, data)=>{
-        if(err){
-          res.json({message: "Internal server error, fetching allusers failed", status: false})
-        }
-        else{
-          res.json({allUsers: data, status: true});
-        }
-    })
-}
+const getAllUsers = (req, res) => {
+  userModel.find((err, data) => {
+    if (err) {
+      res.json({
+        message: "Internal server error, fetching allusers failed",
+        status: false,
+      });
+    } else {
+      res.json({ allUsers: data, status: true });
+    }
+  });
+};
 
-const transferFunc=(req, res)=>{
-    let reqBody = req.body
-    userModel.findById({_id: reqBody.senderId}, (err, senderData)=>{
-        if(err){
-          res.json({message: `internal server error, please check your connection!`, status: false})
-        }
-        else{
-            senderData.totalBalance -= parseInt(reqBody.amount)
-            senderData.transactionType.push(reqBody.senderTransactionDetail)
+const transferFunc = (req, res) => {
+  let reqBody = req.body;
+  userModel.findById({ _id: reqBody.senderId }, (err, senderData) => {
+    if (err) {
+      res.json({
+        message: `internal server error, please check your connection!`,
+        status: false,
+      });
+    } else {
+      senderData.totalBalance -= parseInt(reqBody.amount);
+      senderData.transactionType.push(reqBody.senderTransactionDetail);
 
-            userModel.findById({_id: reqBody.recipientId}, (err, recipientData)=>{
-              if(err){
-                res.json({message: `internal server error, please check your connection!`, status: false})
-              }
-              else{
-                recipientData.totalBalance += parseInt(reqBody.amount)
-                recipientData.transactionType.push(reqBody.recipientTransactionDetail)
-                
-                //sender execution code
-                userModel.findOneAndUpdate({'_id': reqBody.senderId}, { $set: {'totalBalance': senderData.totalBalance, transactionType: senderData.transactionType}}, (err, result)=>{
-                     //recipient execution code
-                userModel.findOneAndUpdate({'_id': reqBody.recipientId}, { $set: {'totalBalance': recipientData.totalBalance, transactionType: recipientData.transactionType}}, (err, result)=>{
+      userModel.findById({ _id: reqBody.recipientId }, (err, recipientData) => {
+        if (err) {
+          res.json({
+            message: `internal server error, please check your connection!`,
+            status: false,
+          });
+        } else {
+          recipientData.totalBalance += parseInt(reqBody.amount);
+          recipientData.transactionType.push(
+            reqBody.recipientTransactionDetail
+          );
+
+          //sender execution code
+          userModel.findOneAndUpdate(
+            { _id: reqBody.senderId },
+            {
+              $set: {
+                totalBalance: senderData.totalBalance,
+                transactionType: senderData.transactionType,
+              },
+            },
+            (err, result) => {
+              //recipient execution code
+              userModel.findOneAndUpdate(
+                { _id: reqBody.recipientId },
+                {
+                  $set: {
+                    totalBalance: recipientData.totalBalance,
+                    transactionType: recipientData.transactionType,
+                  },
+                },
+                (err, result) => {
                   //execution result
-                  if(err){
-                      res.json({message: 'Error occurred, connection time out!', status: false})
+                  if (err) {
+                    res.json({
+                      message: "Error occurred, connection time out!",
+                      status: false,
+                    });
+                  } else {
+                    res.json({
+                      message: "Transfer done successfully",
+                      status: true,
+                    });
                   }
-                  else{
-                    res.json({message: 'Transfer done successfully', status: true})
-                  }
-                })
-
-                })
-
-              }
-            })
+                }
+              );
+            }
+          );
         }
-    })
-}
-
-const topUpWithCard=(req, res)=>{
-  const reqBody = req.body
-  userModel.findById({'_id': reqBody.userId}, (err, user) => {
-    if(err){
-      res.json({message: 'Error occurred please check your internet connection!', status: false})
+      });
     }
-    else{
-        user.totalBalance += parseInt(reqBody.amount)
-        user.transactionType.push(reqBody.transactionDetail)
-        userModel.findOneAndUpdate({'_id': reqBody.userId}, {$set: {'totalBalance': user.totalBalance, 'transactionType': user.transactionType}}, (err, result)=>{
-          if(err) {
-              res.json({message: 'error occurred, please check your connection!', status: false})
+  });
+};
+
+const topUpWithCard = (req, res) => {
+  const reqBody = req.body;
+  userModel.findById({ _id: reqBody.userId }, (err, user) => {
+    if (err) {
+      res.json({
+        message: "Error occurred please check your internet connection!",
+        status: false,
+      });
+    } else {
+      user.totalBalance += parseInt(reqBody.amount);
+      user.transactionType.push(reqBody.transactionDetail);
+      userModel.findOneAndUpdate(
+        { _id: reqBody.userId },
+        {
+          $set: {
+            totalBalance: user.totalBalance,
+            transactionType: user.transactionType,
+          },
+        },
+        (err, result) => {
+          if (err) {
+            res.json({
+              message: "error occurred, please check your connection!",
+              status: false,
+            });
+          } else {
+            res.json({
+              message: `Your account has been funded successfully with ${reqBody.amount}`,
+              status: true,
+            });
           }
-          else{ 
-              res.json({message: `Your account has been funded successfully with ${reqBody.amount}`, status: true})
-          }
-        })
+        }
+      );
     }
-  })
-}
-const checkUser=(req, res)=>{
-    const accountNumber = req.params.id
-    userModel.findOne({'accountNumber': accountNumber}, (err, result)=>{
-        if(err){
-          res.json({message: 'Internal server error, please check your connection', status: false})
+  });
+};
+const checkUser = (req, res) => {
+  const accountNumber = req.params.id;
+  userModel.findOne({ accountNumber: accountNumber }, (err, result) => {
+    if (err) {
+      res.json({
+        message: "Internal server error, please check your connection",
+        status: false,
+      });
+    } else {
+      if (result) {
+        res.json({ user: result, status: true });
+      } else {
+        res.json({
+          message: "The account Number entered is not correct",
+          status: false,
+        });
+      }
+    }
+  });
+};
+
+const editProfile = async(req, res) => {
+  const id = req.params.id;
+  var message ="";
+  var status="";
+  //edit name code
+  if (req.body.type == "name") {
+    userModel.findByIdAndUpdate(
+      { _id: id },
+      { $set: { firstname: req.body.firstname, lastname: req.body.lastname } },
+      (err, result) => {
+        if (err) {
+          message = "Error occurr, try again";
+          status = false;
+        } else {
+          message = "Name updated successfully";
+          status = true;
         }
-        else{
-          if(result){
-              res.json({user: result, status: true})
-          }
-          else{
-            res.json({message: 'The account Number entered is not correct', status: false})
-          }
+          res.json({ message, status });
+      }
+    );
+  }
+  //edit email code
+  else if (req.body.type == "email") {
+    userModel.findByIdAndUpdate(
+      { _id: id },
+      { $set: { email: req.body.email } },
+      (err, result) => {
+        if (err) {
+          message = "Error occurr, try again";
+          status = false;
+        } else {
+          message = "Email updated successfully";
+          status = true;
         }
-    })
-}
+        res.json({ message, status });
+      }
+    );
+  }
+
+  //edit phone Number code
+  else if (req.body.type == "phoneNumber") {
+    userModel.findByIdAndUpdate(
+      { _id: id },
+      { $set: { phoneNumber: req.body.phoneNumber } },
+      (err, result) => {
+        if (err) {
+          message = "Error occurr, try again";
+          status = false;
+        } else {
+          message = "Phone Number updated successfully";
+          status = true;
+        }
+        res.json({ message, status });
+      }
+    );
+  }
+  //edit Address code
+  else if (req.body.type == "address") {
+    userModel.findByIdAndUpdate(
+      { _id: id },
+      { $set: { address: req.body.address } },
+      (err, result) => {
+        if (err) {
+          message = "Error occurr, try again";
+          status = false;
+        } else {
+          message = "Address updated successfully";
+          status = true;
+        }
+        res.json({ message, status });
+      }
+    );
+  }
+  
+};
 module.exports = {
-  getRes, 
+  getRes,
   signup,
   signin,
   authorizeFunc,
@@ -324,5 +447,6 @@ module.exports = {
   getAllUsers,
   transferFunc,
   topUpWithCard,
-  checkUser
+  checkUser,
+  editProfile,
 };

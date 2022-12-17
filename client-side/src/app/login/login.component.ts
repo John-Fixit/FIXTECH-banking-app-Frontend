@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
       this.http.post<any>(`${this.baseUrl}/authLogin`, {accountNumber, password}).subscribe((res)=>{   
         if(res.status){
           localStorage.setItem('userToken', JSON.stringify(res.token))
+          localStorage.setItem('userDetail', JSON.stringify(res.user))
           this.route.navigate(['/home/dashboard'])
         }
         else{

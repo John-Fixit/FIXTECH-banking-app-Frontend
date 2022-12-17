@@ -33,7 +33,6 @@ export class DashboardComponent implements OnInit {
           this.lastTransaction = this.userDetail.transactionType[this.userDetail.transactionType.length-1]
 
             this.emptyObj = Object.keys(this.lastTransaction).length === 0? true: false
-            localStorage.setItem('userId', JSON.stringify(res.userDetail._id))
         }
         else{
           localStorage.removeItem('userToken')

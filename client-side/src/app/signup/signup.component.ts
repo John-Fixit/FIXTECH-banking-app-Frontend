@@ -55,7 +55,6 @@ export class SignupComponent implements OnInit {
 
     if(this.formGroup.value['firstname'] == "" || this.formGroup.value['lastname'] =="" || this.formGroup.value['email'] == "" || this.formGroup.value['contact'] =="" || this.formGroup.value['password']==""){
       this.message = "All input must be filled before proceeding"
-
     }
     else{
       if(this.formGroup.value['password'] == this.formGroup.value['co_password']){
