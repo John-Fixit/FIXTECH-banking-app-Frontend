@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
+let  month = [{name: 'Jan', amount: 0},{name: 'Feb', amount: 0},{name: 'Mar', amount: 0},{name: 'Apr', amount: 0},{name: 'May', amount: 0},{name: 'Jun', amount: 0},{name: 'Jul', amount: 0},{name: 'Aug', amount: 0},{name: 'Sep', amount: 0},{name: 'Oct', amount: 0},{name: 'Nov', amount: 0},{name: 'Dec', amount: 0}, ]
 const userSchema = new mongoose.Schema({
     firstname: String,
     lastname: String,
@@ -12,7 +13,16 @@ const userSchema = new mongoose.Schema({
     address: String,
     dob: String,
     transactionType: [],
+    monthlyTransaction: {
+        type: Object,
+        default: {
+            credit: month,
+            debit: month 
+        }
+    }
+    
 })
+
 
 let saltRound = 10
 userSchema.pre("save", function(next){
@@ -39,5 +49,4 @@ userSchema.methods.validatePassword = function (password, callback){
 
 
 const userModel = mongoose.model('users_tb', userSchema)
-
 module.exports = {userModel}

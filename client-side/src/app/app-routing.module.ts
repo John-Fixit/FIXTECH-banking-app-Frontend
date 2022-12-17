@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AddMoneyComponent } from './add-money/add-money.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { BasicLineEchartComponent } from './echarts/line/basic-line-echart/basic-line-echart.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from './login/login.component';
@@ -23,7 +24,7 @@ const routes: Routes = [
     {path: 'profile/:id', component: UserProfileComponent, title: 'Profile'},
     {path: 'setting', component: SettingsComponent, title: 'Profile Setting'},
   ]},
- 
+  {path: 'chart', component: BasicLineEchartComponent},
   {path: "**", component: ErrorPageComponent, title: "Page Not Found"}
 ];
 

@@ -15,5 +15,5 @@ userRouter.post('/transfer', userController.transferFunc)
 userRouter.post('/topUpWithCard', userController.topUpWithCard)
 userRouter.get('/checkUser/:id', userController.checkUser)
 userRouter.post('/editProfile/:id', userController.editProfile)
-
+userRouter.get('/statisticData/:id', userController.getMonthlyTransactionStat)
 module.exports = userRouter

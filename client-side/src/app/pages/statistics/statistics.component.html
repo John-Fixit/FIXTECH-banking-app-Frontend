@@ -19,8 +19,8 @@
                 <h4>{{debit| currency: 'USD'}}</h4>
             </div>
         </div>
-        <div class="mx-auto">
-            <img src="assets/chart.png" class="card-img-top" alt="">
+        <div class="">
+            <div echarts [options]="echartOptions" [extentions]="echartsExtensions"></div>
         </div>
     </div>
 </div>

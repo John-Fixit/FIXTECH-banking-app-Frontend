@@ -2,14 +2,13 @@
 <main>
     <app-sidenav class=" shadow" [sideNavStatus]="sideNavStatus" [ngClass]="{'app-side-nav-open': sideNavStatus}">
     </app-sidenav>
-    <div class="display-area p-3" [ngClass]="{'display-area-shrink': sideNavStatus}">
+    <div class="display-area px-3 py-2" [ngClass]="{'display-area-shrink': sideNavStatus}">
         <div class="">
-            <div class="shadow-sm py-2">
-                <h4 class="bn_firstColor ps-2 text-danger fs-3 fw-bold">Dashboard</h4>
-                <h2 class="bn_firstColor ps-2"><small class="textColor">Hello</small> {{userDetail !==undefined?
+            <div class="shadow-sm py-2 ps-2">
+                <h4 class="bn_firstColor text-danger fs-3 fw-bold">Dashboard</h4>
+                <h2 class="bn_firstColor"><small class="textColor">Hello</small> {{userDetail !==undefined?
                     (userDetail.firstname + " "+ userDetail.lastname): "user"}} <small class="fs-6 text-primary">Welcome
                         back!</small></h2>
-                <h5 class="ps-4"></h5>
             </div>
             <div class="scrollableForm">
                 <div class="row mx-auto my-3">

@@ -6,8 +6,8 @@
         <div class="">
             <h1 class="ps-2 text-danger fw-bold">Add <span class="textColor">Money</span></h1>
             <div *ngIf="responseErr != undefined" class="text-center">
-                <span class="alert alert-success p-1" *ngIf="responseErr == false">{{response}}</span>
-                <span class="alert alert-danger p-1" *ngIf="responseErr == true">{{response}}</span>
+                <span class="alert alert-success" *ngIf="responseErr == false">{{response}}</span>
+                <span class="alert alert-danger" *ngIf="responseErr == true">{{response}}</span>
             </div>
             <div class="row">
                 <div class="content p-3 col-sm-4">

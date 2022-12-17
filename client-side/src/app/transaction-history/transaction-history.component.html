@@ -18,10 +18,10 @@
                                     <th>Method</th>
                                     <th>Date</th>
                                 </tr>
-                                <tr *ngFor="let item of creditTransaction">
+                                <tr *ngFor="let item of creditTransaction" >
                                     <td>{{item.amount}}</td>
                                     <td>{{item.senderAccountNumber}}</td>
-                                    <td>{{item.method}}</td>
+                                    <td>{{item.transactionMethod}}</td>
                                     <td>{{item.timeStamp| date}}</td>
                                 </tr>
                             </table>

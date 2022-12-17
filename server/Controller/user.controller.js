@@ -15,6 +15,7 @@ const client = require("twilio")(accountSid, authToken);
 const SECRET = process.env.JWT_SECRET;
 const EMAIL = process.env.EMAIL;
 const PASSWORD = process.env.PASSWORD;
+let currentMonth = new Date().getMonth();
 const getRes = (req, res) => {
   return res.json({ message: "It's resonding", status: true });
 };
@@ -195,7 +196,6 @@ const uploadUserPicture = (req, res) => {
         { _id: userDet.id },
         { profile_picture: uploadResult.secure_url },
         (err, result) => {
-          console.log(result);
           if (err) {
             res.json({
               message: `Internal server error, profile picture not saved, please try again`,
@@ -241,6 +241,7 @@ const getAllUsers = (req, res) => {
 
 const transferFunc = (req, res) => {
   let reqBody = req.body;
+    //finding sender code 
   userModel.findById({ _id: reqBody.senderId }, (err, senderData) => {
     if (err) {
       res.json({
@@ -250,7 +251,8 @@ const transferFunc = (req, res) => {
     } else {
       senderData.totalBalance -= parseInt(reqBody.amount);
       senderData.transactionType.push(reqBody.senderTransactionDetail);
-
+      senderData.monthlyTransaction.debit[currentMonth].amount += parseInt(reqBody.amount)
+      //finding recipient code 
       userModel.findById({ _id: reqBody.recipientId }, (err, recipientData) => {
         if (err) {
           res.json({
@@ -262,24 +264,26 @@ const transferFunc = (req, res) => {
           recipientData.transactionType.push(
             reqBody.recipientTransactionDetail
           );
-
-          //sender execution code
+          recipientData.monthlyTransaction.credit[currentMonth].amount += parseInt(reqBody.amount)
+          //sender updating code
           userModel.findOneAndUpdate(
             { _id: reqBody.senderId },
             {
               $set: {
                 totalBalance: senderData.totalBalance,
-                transactionType: senderData.transactionType,
+                transactionType: senderData.transactionType, 
+                monthlyTransaction: senderData.monthlyTransaction
               },
             },
             (err, result) => {
-              //recipient execution code
+              //recipient updating code
               userModel.findOneAndUpdate(
                 { _id: reqBody.recipientId },
                 {
                   $set: {
                     totalBalance: recipientData.totalBalance,
                     transactionType: recipientData.transactionType,
+                    monthlyTransaction: recipientData.monthlyTransaction
                   },
                 },
                 (err, result) => {
@@ -316,15 +320,17 @@ const topUpWithCard = (req, res) => {
     } else {
       user.totalBalance += parseInt(reqBody.amount);
       user.transactionType.push(reqBody.transactionDetail);
+      user.monthlyTransaction.credit[currentMonth].amount += parseInt(reqBody.amount)
       userModel.findOneAndUpdate(
         { _id: reqBody.userId },
         {
           $set: {
             totalBalance: user.totalBalance,
             transactionType: user.transactionType,
+            monthlyTransaction: user.monthlyTransaction
           },
         },
-        (err, result) => {
+        (err) => {
           if (err) {
             res.json({
               message: "error occurred, please check your connection!",
@@ -437,6 +443,14 @@ const editProfile = async(req, res) => {
   }
   
 };
+const getMonthlyTransactionStat=(req, res)=>{
+    const id = req.params.id
+    userModel.findById({'_id': id}).then((data)=>{
+        res.json({creditData: data.monthlyTransaction.credit, debitData: data.monthlyTransaction.debit, status: true})
+    }).catch((err)=>{
+      res.json({message: "Internal server error, please check your connection", status: false}) 
+    })
+}
 module.exports = {
   getRes,
   signup,
@@ -449,4 +463,5 @@ module.exports = {
   topUpWithCard,
   checkUser,
   editProfile,
+  getMonthlyTransactionStat
 };
