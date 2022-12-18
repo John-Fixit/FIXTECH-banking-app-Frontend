@@ -12,8 +12,7 @@ export class StatisticsComponent implements OnInit {
     public userDetail: any = undefined
     public credit:any = 0
     public debit:any = 0
-    private creditData:any = []
-    private debitData:any = []
+    isLoading = true
     readonly echartsExtensions:any []
     public echartOptions = {}
   constructor(
@@ -39,6 +38,7 @@ export class StatisticsComponent implements OnInit {
     let debitData:any = []
     let months:any = []
     this._statDataService.getMonthlyTransactionStat().subscribe((data:any)=>{
+      this.isLoading = false
       data.creditData.map((item:any)=>{
         creditData.push(item.amount)
         months.push(item.name)

@@ -4,6 +4,7 @@ const { userModel } = require("../Models/user.model");
 const cloudinary = require("cloudinary");
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 require("dotenv").config();
 // Download the helper library from https://www.twilio.com/docs/node/install
 // Find your Account SID and Auth Token in Account Info and set the environment variables.
@@ -123,7 +124,8 @@ const signin = (req, res) => {
               res.json({ token, status: true, user });
             } else {
               res.json({
-                message: `Incorrect password, please check your password and try again`, status: false
+                message: `Incorrect Verification Pin, please check your PIN and try again`,
+                status: false,
               });
             }
           }
@@ -241,7 +243,7 @@ const getAllUsers = (req, res) => {
 
 const transferFunc = (req, res) => {
   let reqBody = req.body;
-    //finding sender code 
+  //finding sender code
   userModel.findById({ _id: reqBody.senderId }, (err, senderData) => {
     if (err) {
       res.json({
@@ -251,8 +253,10 @@ const transferFunc = (req, res) => {
     } else {
       senderData.totalBalance -= parseInt(reqBody.amount);
       senderData.transactionType.push(reqBody.senderTransactionDetail);
-      senderData.monthlyTransaction.debit[currentMonth].amount += parseInt(reqBody.amount)
-      //finding recipient code 
+      senderData.monthlyTransaction.debit[currentMonth].amount += parseInt(
+        reqBody.amount
+      );
+      //finding recipient code
       userModel.findById({ _id: reqBody.recipientId }, (err, recipientData) => {
         if (err) {
           res.json({
@@ -264,45 +268,73 @@ const transferFunc = (req, res) => {
           recipientData.transactionType.push(
             reqBody.recipientTransactionDetail
           );
-          recipientData.monthlyTransaction.credit[currentMonth].amount += parseInt(reqBody.amount)
+          recipientData.monthlyTransaction.credit[currentMonth].amount +=
+            parseInt(reqBody.amount);
           //sender updating code
-          userModel.findOneAndUpdate(
-            { _id: reqBody.senderId },
-            {
-              $set: {
-                totalBalance: senderData.totalBalance,
-                transactionType: senderData.transactionType, 
-                monthlyTransaction: senderData.monthlyTransaction
-              },
-            },
-            (err, result) => {
-              //recipient updating code
-              userModel.findOneAndUpdate(
-                { _id: reqBody.recipientId },
-                {
-                  $set: {
-                    totalBalance: recipientData.totalBalance,
-                    transactionType: recipientData.transactionType,
-                    monthlyTransaction: recipientData.monthlyTransaction
+          // senderData.validatePassword({password: reqBody.password}, (err, same)=>{
+          //       if(err){
+          //         console.log(err)
+          //       }
+          //       else{
+          //         if(same){
+          //           console.log('correct pin')
+          //         }
+          //         else{
+          //           console.log('ioncorrect pin')
+          //         }
+          //       }
+          // })
+
+          bcrypt.compare(reqBody.password, senderData.password, (err, same) => {
+            if (err) {
+              console.log(err);
+            } else {
+              if (same) {
+                userModel.findOneAndUpdate(
+                  { _id: reqBody.senderId },
+                  {
+                    $set: {
+                      totalBalance: senderData.totalBalance,
+                      transactionType: senderData.transactionType,
+                      monthlyTransaction: senderData.monthlyTransaction,
+                    },
                   },
-                },
-                (err, result) => {
-                  //execution result
-                  if (err) {
-                    res.json({
-                      message: "Error occurred, connection time out!",
-                      status: false,
-                    });
-                  } else {
-                    res.json({
-                      message: "Transfer done successfully",
-                      status: true,
-                    });
+                  (err, result) => {
+                    //recipient updating code
+                    userModel.findOneAndUpdate(
+                      { _id: reqBody.recipientId },
+                      {
+                        $set: {
+                          totalBalance: recipientData.totalBalance,
+                          transactionType: recipientData.transactionType,
+                          monthlyTransaction: recipientData.monthlyTransaction,
+                        },
+                      },
+                      (err, result) => {
+                        //execution result
+                        if (err) {
+                          res.json({
+                            message: "Error occurred, connection time out!",
+                            status: false,
+                          });
+                        } else {
+                          res.json({
+                            message: "Transfer done successfully",
+                            status: true,
+                          });
+                        }
+                      }
+                    );
                   }
-                }
-              );
+                );
+              } else {
+                res.json({
+                  message: "The PIN entered is not correct",
+                  status: false,
+                });
+              }
             }
-          );
+          });
         }
       });
     }
@@ -320,14 +352,16 @@ const topUpWithCard = (req, res) => {
     } else {
       user.totalBalance += parseInt(reqBody.amount);
       user.transactionType.push(reqBody.transactionDetail);
-      user.monthlyTransaction.credit[currentMonth].amount += parseInt(reqBody.amount)
+      user.monthlyTransaction.credit[currentMonth].amount += parseInt(
+        reqBody.amount
+      );
       userModel.findOneAndUpdate(
         { _id: reqBody.userId },
         {
           $set: {
             totalBalance: user.totalBalance,
             transactionType: user.transactionType,
-            monthlyTransaction: user.monthlyTransaction
+            monthlyTransaction: user.monthlyTransaction,
           },
         },
         (err) => {
@@ -368,10 +402,10 @@ const checkUser = (req, res) => {
   });
 };
 
-const editProfile = async(req, res) => {
+const editProfile = async (req, res) => {
   const id = req.params.id;
-  var message ="";
-  var status="";
+  var message = "";
+  var status = "";
   //edit name code
   if (req.body.type == "name") {
     userModel.findByIdAndUpdate(
@@ -385,7 +419,7 @@ const editProfile = async(req, res) => {
           message = "Name updated successfully";
           status = true;
         }
-          res.json({ message, status });
+        res.json({ message, status });
       }
     );
   }
@@ -441,16 +475,25 @@ const editProfile = async(req, res) => {
       }
     );
   }
-  
 };
-const getMonthlyTransactionStat=(req, res)=>{
-    const id = req.params.id
-    userModel.findById({'_id': id}).then((data)=>{
-        res.json({creditData: data.monthlyTransaction.credit, debitData: data.monthlyTransaction.debit, status: true})
-    }).catch((err)=>{
-      res.json({message: "Internal server error, please check your connection", status: false}) 
+const getMonthlyTransactionStat = (req, res) => {
+  const id = req.params.id;
+  userModel
+    .findById({ _id: id })
+    .then((data) => {
+      res.json({
+        creditData: data.monthlyTransaction.credit,
+        debitData: data.monthlyTransaction.debit,
+        status: true,
+      });
     })
-}
+    .catch((err) => {
+      res.json({
+        message: "Internal server error, please check your connection",
+        status: false,
+      });
+    });
+};
 module.exports = {
   getRes,
   signup,
@@ -463,5 +506,5 @@ module.exports = {
   topUpWithCard,
   checkUser,
   editProfile,
-  getMonthlyTransactionStat
+  getMonthlyTransactionStat,
 };

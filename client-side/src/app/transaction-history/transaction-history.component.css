@@ -1,9 +1,13 @@
 .text-color{
     color: navy;
 }
-.scrollableTable{
-    height: 70vh;
+.scrollable{
+    height: 98vh;
     overflow-y: auto;
+}
+.scrollableTable{
+    height: 50vh;
+    overflow-y: auto !important;
 }
 .scrollableTable::-webkit-scrollbar{
     width: 3px;

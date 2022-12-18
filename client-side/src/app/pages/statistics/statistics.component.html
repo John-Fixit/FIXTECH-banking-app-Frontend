@@ -19,8 +19,9 @@
                 <h4>{{debit| currency: 'USD'}}</h4>
             </div>
         </div>
-        <div class="">
-            <div echarts [options]="echartOptions" [extentions]="echartsExtensions"></div>
+        <div class="text-center">
+            <div echarts [options]="echartOptions" [extentions]="echartsExtensions" *ngIf="!isLoading"></div>
+            <div *ngIf="isLoading">Oops! please check your connection...</div>
         </div>
     </div>
 </div>

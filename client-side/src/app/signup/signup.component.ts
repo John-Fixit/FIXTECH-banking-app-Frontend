@@ -32,8 +32,8 @@ export class SignupComponent implements OnInit {
     lastname: ["", [Validators.required, Validators.minLength(2)]],
     email: ["", [Validators.required, Validators.email]],
     contact: ["", [Validators.required, Validators.pattern(this.contactRegex)]],
-    password: ["", [Validators.required, Validators.minLength(6)]],
-    co_password: ["", [Validators.required]],
+    pin: ["", [Validators.required, Validators.minLength(6), Validators.maxLength(6)]],
+    confirm_pin: ["", [Validators.required]],
   })
 
 
@@ -46,18 +46,18 @@ export class SignupComponent implements OnInit {
       lastname: this.formGroup.value['lastname'], 
       email: this.formGroup.value['email'], 
       phoneNumber: this.formGroup.value['contact'], 
-      password: this.formGroup.value['password'], 
+      password: this.formGroup.value['pin'], 
       accountNumber: accountNumber, 
       totalBalance: 1000,
       transactionType: [],
       profile_picture: ""
     }
 
-    if(this.formGroup.value['firstname'] == "" || this.formGroup.value['lastname'] =="" || this.formGroup.value['email'] == "" || this.formGroup.value['contact'] =="" || this.formGroup.value['password']==""){
+    if(this.formGroup.value['firstname'] == "" || this.formGroup.value['lastname'] =="" || this.formGroup.value['email'] == "" || this.formGroup.value['contact'] =="" || this.formGroup.value['pin']==""){
       this.message = "All input must be filled before proceeding"
     }
     else{
-      if(this.formGroup.value['password'] == this.formGroup.value['co_password']){
+      if(this.formGroup.value['pin'] == this.formGroup.value['confirm_pin']){
         this.isLoading = true
         this.userService.registerUser(userDetail).subscribe(response=> {
           this.resStatus = response.status                                                                                            
@@ -67,8 +67,8 @@ export class SignupComponent implements OnInit {
           this.formGroup.value['lastname'] = ""
           this.formGroup.value['email'] = ""
           this.formGroup.value['contact'] = ""
-          this.formGroup.value['password'] = ""
-          this.formGroup.value['co_password'] = ""
+          this.formGroup.value['pin'] = ""
+          this.formGroup.value['confirm_pin'] = ""
         }, error=> {
           console.log(error);
         })

@@ -41,7 +41,6 @@ export class UserProfileComponent implements OnInit {
             {name: "E-mail Address", value: (this.userDetail.email)},
             {name: "Contact", value: this.userDetail.phoneNumber? (this.userDetail.phoneNumber): "Contact" },
             {name: "Address", value: this.userDetail.address? (this.userDetail.address): "Address" },
-            {name: "Date of Birth", value: this.userDetail.dob ? (this.userDetail.dob): "Date of Birth" },
           ]
         }, error =>console.log(error)
         )

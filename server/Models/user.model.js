@@ -11,13 +11,12 @@ const userSchema = new mongoose.Schema({
     profile_picture: String,
     password: String,
     address: String,
-    dob: String,
     transactionType: [],
-    monthlyTransaction: {
+    monthlyTransaction: {   
         type: Object,
         default: {
             credit: month,
-            debit: month 
+            debit: month
         }
     }
     
@@ -36,7 +35,6 @@ userSchema.pre("save", function(next){
     } )
 })
 
-
 userSchema.methods.validatePassword = function (password, callback){
     bcrypt.compare(password, this.password, (err, same)=>{
         if(!err){
@@ -46,6 +44,7 @@ userSchema.methods.validatePassword = function (password, callback){
         }
     })
 }
+
 
 
 const userModel = mongoose.model('users_tb', userSchema)

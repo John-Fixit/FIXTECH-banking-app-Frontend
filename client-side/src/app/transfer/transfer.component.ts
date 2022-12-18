@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { faUser as userIcon, faSearch as searchIcon } from '@fortawesome/free-solid-svg-icons';
+import { ToastService } from 'angular-toastify';
 import { environment } from 'src/environments/environment';
 import { TransactionService } from '../services/transaction.service';
 import { UsersService } from '../services/users.service';
@@ -20,20 +21,25 @@ export class TransferComponent implements OnInit {
   public hide_show_amt: boolean = false
   public message: any = ""
   private baseUrl = environment.url
-  public showHideAmtError = false
   public errStatus: any = undefined;
   public amtErrStatus: any = undefined
   public confirmTransferErr: any = undefined
   public confirmTransferMessage: string = ""
   public amtMessage: any = ""
+  public pin = ""
 
   public thisUser:any = {}
 
+  public isLoading = false
+  public confirmTransferLoading = false
+  disableBtn = true
+  disableTransferBtn = true
   constructor(
     private _userService: UsersService,
     private _transactionService : TransactionService,
     private _router: Router,
-    private _http : HttpClient
+    private _http : HttpClient,
+    private _toastService: ToastService
 
   ) { 
   
@@ -56,7 +62,9 @@ export class TransferComponent implements OnInit {
 
   beneficiary_continue(){
     if(this.beneficiary_accNumber !=""){
+      this.isLoading = true
       this._http.get(`${this.baseUrl}/checkUser/${this.beneficiary_accNumber}`).subscribe((res:any)=>{
+        this.isLoading = false
         if(res.status){
           if(res.user.accountNumber == this.thisUser.accountNumber){
               this.errStatus = true
@@ -79,23 +87,23 @@ export class TransferComponent implements OnInit {
     }
   }
 
-  addAmount(){
-      if(this.amtToTransfer != ""){
-          this.showHideAmtError = false
-      }
-      else{
-        this.showHideAmtError = true
-        this.amtMessage = "please enter the amount to transfer!"
-      }
-  }
 
   addText($event:any){
       this.amtToTransfer = $event.target.value; 
-      if(this.amtToTransfer != ""){
-        this.amtErrStatus = false
-      }  
+      if(parseInt($event.target.value) >=50){
+        this.disableBtn = false
+      }
       else{
-        this.amtErrStatus = true
+        this.disableBtn = true
+      }
+  }
+  enterPin($event:any){
+      this.pin = $event.target.value
+      if($event.target.value != ""){
+        this.disableTransferBtn = false
+      }
+      else{
+        this.disableTransferBtn = true
       }
   }
 
@@ -107,17 +115,19 @@ export class TransferComponent implements OnInit {
         this.confirmTransferMessage = "Your account balance is insufficient to complete the transaction!"
       }
       else{
+        this.confirmTransferLoading = true
           let senderTransactionDetail = {type: 'debit', recipient: `${this.recipientDetail.firstname} ${this.recipientDetail.lastname}`, recipientAccountNumber: this.recipientDetail.accountNumber, timeStamp: new Date(), transactionMethod: 'transfer', amount: parseInt(this.amtToTransfer)};
           
           let recipientTransactionDetail = {type: 'credit', sender: `${this.thisUser.firstname} ${this.thisUser.lastname}`, senderAccountNumber: this.thisUser.accountNumber, timeStamp: new Date(), transactionMethod: 'recieved', amount: parseInt(this.amtToTransfer)};
 
-          let transferDetail = {senderId: this.thisUser._id, recipientId: this.recipientDetail._id, amount: this.amtToTransfer, senderTransactionDetail, recipientTransactionDetail}
+          let transferDetail = {senderId: this.thisUser._id, recipientId: this.recipientDetail._id, amount: this.amtToTransfer, senderTransactionDetail, recipientTransactionDetail, password: this.pin}
 
           this._transactionService.transferFunc(transferDetail).subscribe((res:any)=>{
+            this.confirmTransferLoading = false
             if(res.status){
-                this.confirmTransferErr = false;
-                this.confirmTransferMessage = res.message;
+                this._toastService.success(res.message)
                 this.beneficiary_accNumber = "";
+                this.pin = ""
                 this.errStatus = undefined
             }
             else{

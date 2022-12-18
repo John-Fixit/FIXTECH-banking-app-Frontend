@@ -9,7 +9,6 @@
                 <div class="col-sm-3 shadow-sm">
                     <div *ngIf="confirmTransferErr != undefined" class="text-center">
                         <span *ngIf="confirmTransferErr == true" class="alert alert-danger p-0">{{confirmTransferMessage}}</span>
-                        <span *ngIf="confirmTransferErr == false" class="alert alert-success p-0">{{confirmTransferMessage}}</span>
                     </div>
                     
                     <div class="form-group my-2">
@@ -17,63 +16,66 @@
                             <div *ngIf="errStatus" class="text-danger alert alert-danger">
                                 {{message}}
                             </div>
-
                         </div>
                         <label for="">Search Recipient</label>
                         <div class="input-group rounded px-2">
                             <fa-icon [icon]="icons.searchIcon" class="text-muted"></fa-icon>
-                            <input type="text" name="" id="" class="form-control" placeholder="Enter recipient account number" [(ngModel)]="beneficiary_accNumber">
+                            <input type="number" class="form-control" placeholder="Enter recipient account number" [(ngModel)]="beneficiary_accNumber">
                             <fa-icon [icon]="icons.userIcon" class="text-muted"></fa-icon>
                         </div>
                     </div>
-                    <!-- <div class="display_recipient my-3">
-                        <div class="users-column" *ngFor="let user of allUsers | checkUser: beneficiary_accNumber ">
-                            <div class="card-title">
-                                <h5>{{user.firstname + " " + user.lastname}}</h5>
-                                <p>{{user.accountNumber}}</p>
-                            </div>
-                        </div>
-                    </div> -->
                     <div>
                         <button class="btn btn-danger float-end" *ngIf="errStatus == undefined || errStatus==true"  (click)="beneficiary_continue()">Continue</button>
+                        <div class="spinner-border text-navy float-end" role="status" *ngIf="isLoading">
+                          <span class="visually-hidden">Loading...</span>
+                        </div>
                     </div>
 
                     
                 </div>
                 <div class="col-sm-9 shadow-sm">
                     <div class="form-group shadow-sm my-3 p-2" *ngIf="errStatus == false">
-                        <!-- <div class="form-group shadow-sm my-3 p-2" > -->
                         <div class="beneficiary-detail shadow-sm" *ngIf="recipientDetail">
                                 <h3>{{recipientDetail.firstname+" "+recipientDetail.lastname}}</h3>
                                 <p>{{recipientDetail.accountNumber}}</p>
                         </div>
-                        <div *ngIf="amtErrStatus" class="text-danger alert alert-danger">
-                            {{amtMessage}}
-                        </div>
+                        
                         <label for="" class="card-title fw-bold">Enter amount to transfer</label>
-                        <input type="text" class="form-control border border-primary" (keyup)="addText($event)" >
-                        <button class="btn bg-color my-2 float-end" (click)="addAmount()" data-bs-toggle="modal" data-bs-target="#exampleModal">Continue</button>
+                        <p class="alert alert-warning">Please Note that amount less than $50 cannot be transfered</p>
+                        <input type="number" class="form-control border border-primary" (keyup)="addText($event)">
+                        <button class="btn bg-color my-2 float-end" [ngClass]="{'disabled': disableBtn}"    data-bs-toggle="modal" data-bs-target="#exampleModal">Continue</button>
                     </div>
-                 
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" *ngIf="amtErrStatus == false">
+    
+                      <div class="progress-loader" *ngIf="confirmTransferLoading">
+                        <div class="progress"></div>
+                    </div>
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
                       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                         <div class="modal-content">
                           <div class="modal-header">
                             <h5 class="modal-title text-center" id="exampleModalLabel">Notification!!!</h5>
                           </div>
                           <div class="modal-body">
-                                You are about to transfer `amountToTransfer` to `recipient name`
+                            <p class="alert alert-warning">
+                                You are about to transfer {{amtToTransfer | currency:'USD'}} to {{(recipientDetail.firstname| uppercase)+" "+recipientDetail.lastname| uppercase}}
                                 enter your pin
-                                <input type="number" class="form-control" placeholder="PIN">
+                            </p>
+                                <input type="number" class="form-control" placeholder="PIN" (keyup)="enterPin($event)" [value]="pin">
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-primary" (click)="confirmTransfer()" data-bs-dismiss="modal">Transfer</button>
+                            <button type="button" class="btn btn-primary" (click)="confirmTransfer()" data-bs-dismiss="modal" [ngClass]="{'disabled': disableTransferBtn}">Transfer</button>
                           </div>
                         </div>
                       </div>
                     </div>
-                    
+                    <lib-toastify-toast-container
+                    [position]="'top-right'"
+                    [transition]="'slide'"
+                    [autoClose]="7000"
+                    [iconLibrary]="'material'"
+                    >
+                    </lib-toastify-toast-container>
                 </div>
             </div>
         </div>
