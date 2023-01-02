@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  url : "http://localhost:5000",
+  url : "https://fixtech-lac.vercel.app",
 };
 
 /*
