@@ -12,8 +12,6 @@ export class ApiService {
   ) { }
  
     getUser(userId: any){
-      console.log(userId);
-      
         return this.http.get<any>(`${this.url}/getUserDetail/${userId}`)
     }
 }

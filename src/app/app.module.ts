@@ -28,6 +28,7 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { BasicLineEchartComponent } from './echarts/line/basic-line-echart/basic-line-echart.component';
 // import { NgxEchartsModule } from 'ngx-echarts';
 import { EchartsxModule } from 'echarts-for-angular';
+import { PaymentsComponent } from './payments/payments.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { EchartsxModule } from 'echarts-for-angular';
     CheckUserPipe,
     AddMoneyComponent,
     TransactionHistoryComponent,
-    BasicLineEchartComponent
+    BasicLineEchartComponent,
+    PaymentsComponent
   ],
   imports: [
     BrowserModule,

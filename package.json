@@ -30,6 +30,7 @@
     "angular4-paystack": "^3.0.2",
     "echarts": "^5.4.1",
     "echarts-for-angular": "^0.4.0",
+    "messagebird": "^3.8.1",
     "ngx-clipboard": "^15.1.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

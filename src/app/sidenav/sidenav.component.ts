@@ -47,6 +47,11 @@ export class SidenavComponent implements OnInit {
         icon: faMoneyCheckAlt
     },
     {
+        route: "/home/add_money",
+        name: "Payment",
+        icon: faMoneyCheckAlt
+    },
+    {
         route: "/home/transaction_history",
         name: "History",
         icon: faHistory
